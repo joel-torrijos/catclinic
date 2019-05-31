@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { PatientListComponent } from "./patient-list/patient-list.component";
 import { PatientRoutingModule } from "./patient-routing.module";
 import { SharedModule } from "../shared";
+import { PatientEditorComponent } from "./patient-editor/patient-editor.component";
 
 @NgModule({
     imports: [
@@ -9,7 +10,8 @@ import { SharedModule } from "../shared";
         PatientRoutingModule
     ],
     declarations: [
-        PatientListComponent
+        PatientListComponent,
+        PatientEditorComponent
     ],
     providers: []
 })

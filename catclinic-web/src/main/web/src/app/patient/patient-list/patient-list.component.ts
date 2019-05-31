@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PatientService } from 'src/app/core/services';
 import { Patients, Patient } from 'src/app/core';
+import { PatientService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-patient-list',
@@ -15,15 +15,13 @@ export class PatientListComponent implements OnInit {
   constructor(private patientService : PatientService) { }
 
   ngOnInit() {
-    console.log("zz");
     this.patientService.getAll().subscribe((response : Patients) => {
-      console.log(response);
       this.response = response;
       // this.response.page = response.page;
       this.patients = response._embedded.patients;
-      console.log(response.page);
-      this.pages = Array(response.page.totalPages).fill().map((x,i) => i);
-      console.log(this.pages);
+      // console.log(response.page);
+      this.pages = Array(response.page.totalPages).fill(0).map((x,i) => i);
+      // console.log(this.pages);
     });
   }
 

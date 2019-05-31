@@ -30,6 +30,10 @@ public class Patient {
 	public String getFirstName() {
 		return firstName;
 	}
+	
+	public Long getId() {
+		return id;
+	}
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;

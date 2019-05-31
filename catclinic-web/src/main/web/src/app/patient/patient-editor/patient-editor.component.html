@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div *ngIf="editMode; else elseBlock"><h3>Edit Patient</h3></div>
+        <ng-template #elseBlock><h3>Add Patient</h3></ng-template>
+        <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label required" for="">First Name</label>
+                        <input class="form-control" type="text" name="" formControlName="firstName" [ngClass] ="{'is-invalid' : submitted && f.firstName.errors}">
+                        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                            <div *ngIf="submitted && f.firstName.errors">First Name is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="">Last Name</label>
+                        <input class="form-control" type="text" name="" formControlName="lastName" [ngClass] ="{'is-invalid' : submitted && f.lastName.errors}"  >
+                        <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                            <div *ngIf="submitted && f.lastName.errors">Last Name is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">Address</label>
+                        <input class="form-control" type="text" name="" id="">
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-5">
+                    <label for="exampleFormControlSelect1">Gender</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </div>
+                <div class="col-md-7">
+                    <label for="exampleFormControlSelect1">Date of Birth</label>
+                    <input class="form-control" type="date" id="example-date-input">
+                </div>
+            </div>
+            <hr class="mb-4">
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-end">
+                   <button type="button" class="btn btn-primary mr-1" (click)="goBack()">Back</button>
+                   <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
