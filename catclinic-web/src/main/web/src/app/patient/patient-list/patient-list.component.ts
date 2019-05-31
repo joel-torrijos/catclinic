@@ -10,13 +10,20 @@ import { Patients, Patient } from 'src/app/core';
 export class PatientListComponent implements OnInit {
   response : Patients;
   patients : Patient[];
+  pages: number[];
 
   constructor(private patientService : PatientService) { }
 
   ngOnInit() {
+    console.log("zz");
     this.patientService.getAll().subscribe((response : Patients) => {
+      console.log(response);
       this.response = response;
+      // this.response.page = response.page;
       this.patients = response._embedded.patients;
+      console.log(response.page);
+      this.pages = Array(response.page.totalPages).fill().map((x,i) => i);
+      console.log(this.pages);
     });
   }
 

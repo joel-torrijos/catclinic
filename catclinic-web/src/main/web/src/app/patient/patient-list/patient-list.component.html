@@ -1,6 +1,52 @@
-<h4>Patients</h4>
-<ul>
-    <li *ngFor="let patient of patients">
-        {{patient.firstName}} {{patient.lastName}}
-    </li>
-</ul>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h3 class="mb-4">Patients</h3>
+        <button class="btn btn-success btn-sm justify-content-end">Add Patient</button>
+        <table class="table table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let patient of patients">
+                    <td></td>
+                    <td>{{patient.firstName}} {{patient.lastName}}</td>
+                    <td class="d-flex justify-content-between">
+                        <button class="btn btn-primary btn-sm">Edit</button>
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row d-flex align-items-center">
+            <div class="col-md-12">
+
+                
+                <nav aria-label="Page navigation example">
+                    <span>Showing 2 of 20 records</span>
+                    <ul class="pagination">
+                        <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        </li>
+                        <li class="page-item" *ngFor="let page of pages" [ngClass]="{'active': response.page.number === page}">
+                            <a class="page-link" href="#">{{page}}</a>
+                        </li>
+        
+                        <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
