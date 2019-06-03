@@ -27,7 +27,7 @@
         </table>
         <div class="row" *ngIf="response">
             <div class="col-md-6 align-items-center">
-                <span>Showing {{(response.page.number * response.page.size) + patients.length}} of {{response.page.totalElements}} records</span>
+                <span>Showing {{ patients[0].id }} to {{ patients[patients.length - 1].id }} of {{response.page.totalElements}} records</span>
             </div>
             <div class="col-md-6">
                 <nav aria-label="Page navigation example">
