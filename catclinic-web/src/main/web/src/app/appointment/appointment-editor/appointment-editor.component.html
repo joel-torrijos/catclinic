@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div *ngIf="editMode; else elseBlock"><h3>Edit Appointment</h3></div>
+        <ng-template #elseBlock><h3>Add Appointment</h3></ng-template>
+        <form [formGroup]="conditionForm" (ngSubmit)="onSubmit()">
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="">Patient</label>
+                        <select class="custom-select">
+                            <option selected>Select Patient</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <hr class="mb-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">Notes</label>
+                        <textarea class="form-control" type="text" rows="7" formControlName="description"></textarea>
+                    </div>
+                </div>
+            </div>
+            <hr class="mb-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">Conditions</label>
+                    </div>
+                </div>
+            </div>
+            <hr class="mb-4">
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary mr-1" (click)="goBack()">Back</button>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

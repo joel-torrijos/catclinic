@@ -8,6 +8,7 @@ import { CoreModule } from './core';
 import { SharedModule } from './shared';
 import { HeaderComponent } from './shared';
 import { ConditionModule } from './condition/condition.module';
+import { AppointmentModule } from './appointment/appointment.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ConditionModule } from './condition/condition.module';
     SharedModule,
     PatientModule,
     ConditionModule,
+    AppointmentModule,
     AppRoutingModule
   ],
   providers: [],
