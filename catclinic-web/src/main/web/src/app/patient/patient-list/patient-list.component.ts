@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Patients, Patient } from 'src/app/core';
 import { PatientService } from 'src/app/core/services';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-patient-list',
@@ -12,10 +15,14 @@ export class PatientListComponent implements OnInit {
   patients : Patient[];
   pages: number[];
 
-  constructor(private patientService : PatientService) { }
+  constructor(private patientService : PatientService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.patientService.getAll().subscribe((response : Patients) => {
+    this.route.queryParams.pipe(switchMap(param=> {
+      let httpParams = new HttpParams({ fromObject: param });
+      return this.patientService.getAll(httpParams);
+    })).subscribe((response : Patients) => {
       this.response = response;
       // this.response.page = response.page;
       this.patients = response._embedded.patients;

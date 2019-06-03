@@ -3,7 +3,7 @@ import { ApiService } from "./api.service";
 import { Patients, Patient } from "../models";
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
-import { HttpHeaders } from "@angular/common/http";
+import { HttpHeaders, HttpParams } from "@angular/common/http";
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,8 +13,8 @@ const httpOptions = {
 export class PatientService {
     constructor(private apiService : ApiService) { }
 
-    getAll(): Observable<Patients> {
-        return this.apiService.get('/patients?sort=id');
+    getAll(params: HttpParams): Observable<Patients> {
+        return this.apiService.get('/patients', params);
     }
 
     get(id: string): Observable<Patient> {

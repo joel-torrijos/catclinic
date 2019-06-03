@@ -6,10 +6,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { PatientModule } from './patient/patient.module';
 import { CoreModule } from './core';
 import { SharedModule } from './shared';
+import { HeaderComponent } from './shared';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, HeaderComponent
   ],
   imports: [
     BrowserModule,

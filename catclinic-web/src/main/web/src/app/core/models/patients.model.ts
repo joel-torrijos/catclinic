@@ -7,7 +7,11 @@ export interface Patients {
     },
     _links: {
         self: Link,
-        profile: Link
+        profile: Link,
+        first?: Link,
+        prev?: Link,
+        next?: Link,
+        last?: Link
     },
     page: {
         size: number,
