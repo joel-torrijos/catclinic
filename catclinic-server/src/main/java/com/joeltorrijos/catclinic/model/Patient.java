@@ -8,11 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="patient")
-public class Patient {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+public class Patient extends BaseEntity{
 	
 	private String firstName;
 	
@@ -29,10 +25,6 @@ public class Patient {
 
 	public String getFirstName() {
 		return firstName;
-	}
-	
-	public Long getId() {
-		return id;
 	}
 
 	public void setFirstName(String firstName) {

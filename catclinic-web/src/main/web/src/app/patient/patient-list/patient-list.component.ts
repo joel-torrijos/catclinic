@@ -24,11 +24,8 @@ export class PatientListComponent implements OnInit {
       return this.patientService.getAll(httpParams);
     })).subscribe((response : Patients) => {
       this.response = response;
-      // this.response.page = response.page;
       this.patients = response._embedded.patients;
-      // console.log(response.page);
       this.pages = Array(response.page.totalPages).fill(0).map((x,i) => i);
-      // console.log(this.pages);
     });
   }
 
