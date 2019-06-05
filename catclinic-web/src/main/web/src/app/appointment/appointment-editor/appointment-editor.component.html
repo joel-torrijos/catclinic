@@ -1,19 +1,29 @@
 <div class="row">
     <div class="col-md-6 offset-md-3">
-        <div *ngIf="editMode; else elseBlock"><h3>Edit Appointment</h3></div>
+        <!-- <div *ngIf="editMode; else elseBlock"><h3>Edit Appointment</h3></div> -->
         <ng-template #elseBlock><h3>Add Appointment</h3></ng-template>
-        <form [formGroup]="conditionForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
             <div class="row mt-3">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="control-label required" for="">Patient</label>
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Search Patient's Name" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-success" type="button">Add Patient</button>
-                            </div>
+                        <ng-template #rt let-r="result" let-t="term">
+                            <ngb-highlight [result]="r.firstName + ' ' + r.lastName" [term]="t"></ngb-highlight>
+                        </ng-template>
+                        <label for="typeahead-http">Patient</label>
+                        <input id="typeahead-http" type="text" class="form-control" 
+                                formControlName="patient"
+                                (selectItem)="setModel($event)"
+                                name="patient" 
+                                [ngbTypeahead]="searchA" 
+                                placeholder="Patient's Name" 
+                                [resultTemplate]="rt"
+                                [inputFormatter]="formatter"
+                                [editable]="false"
+                                [ngClass] ="{'is-invalid' : f.patient.touched && f.patient.invalid}"/>
+                        <div *ngIf="f.patient.touched && f.patient.invalid" class="invalid-feedback d-block">
+                            <div *ngIf="f.patient.touched && f.patient.invalid">Patient is required. If the patient does not exist, you have to create a Patient first.</div>
                         </div>
-                    </div>
+                    </div>             
                 </div>
             </div>
             <hr class="mb-4">
@@ -21,7 +31,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="">Notes</label>
-                        <textarea class="form-control" type="text" rows="7" formControlName="description"></textarea>
+                        <textarea formControlName="notes" class="form-control" type="text" rows="7"></textarea>
                     </div>
                 </div>
             </div>
