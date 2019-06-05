@@ -8,8 +8,11 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="patient")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Patient extends BaseEntity{
 	
 	private String firstName;

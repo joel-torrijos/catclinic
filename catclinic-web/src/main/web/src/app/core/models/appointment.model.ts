@@ -1,7 +1,9 @@
 import { Link } from ".";
+import { Patient } from "./patient.model";
 
 export interface Appointment {
     id: number,
+    patient: Patient,
     notes: string,
     _links: {
         self: Link,

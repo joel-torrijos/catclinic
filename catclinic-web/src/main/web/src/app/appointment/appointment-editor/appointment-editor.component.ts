@@ -65,7 +65,6 @@ export class AppointmentEditorComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("lol");
     if(this.appointmentForm.invalid) {
       return;
     }

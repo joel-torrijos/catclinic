@@ -1,16 +1,17 @@
 <div class="row">
     <div class="col-md-6 offset-md-3">
-        <!-- <div *ngIf="editMode; else elseBlock"><h3>Edit Appointment</h3></div> -->
+        <div *ngIf="editMode; else elseBlock"><h3>Edit Appointment</h3></div>
         <ng-template #elseBlock><h3>Add Appointment</h3></ng-template>
         <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
-            <div class="row mt-3">
+            <div class="row mt-4">
                 <div class="col-md-12">
                     <div class="form-group">
                         <ng-template #rt let-r="result" let-t="term">
                             <ngb-highlight [result]="r.firstName + ' ' + r.lastName" [term]="t"></ngb-highlight>
                         </ng-template>
                         <label for="typeahead-http">Patient</label>
-                        <input id="typeahead-http" type="text" class="form-control" 
+                        <div class="input-group mb-3">
+                            <input id="typeahead-http" type="text" class="form-control" 
                                 formControlName="patient"
                                 (selectItem)="setModel($event)"
                                 name="patient" 
@@ -20,12 +21,16 @@
                                 [inputFormatter]="formatter"
                                 [editable]="false"
                                 [ngClass] ="{'is-invalid' : f.patient.touched && f.patient.invalid}"/>
-                        <div *ngIf="f.patient.touched && f.patient.invalid" class="invalid-feedback d-block">
-                            <div *ngIf="f.patient.touched && f.patient.invalid">Patient is required. If the patient does not exist, you have to create a Patient first.</div>
-                        </div>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success rounded-right" type="button" routerLink="/patients/new"><span class="oi oi-plus"></span>&nbsp;Add Patient</button>
+                            </div>
+                            <div *ngIf="f.patient.touched && f.patient.invalid" class="invalid-feedback d-block">
+                                <div *ngIf="f.patient.touched && f.patient.invalid">Patient is required. If the patient does not exist, you have to create a Patient first.</div>
+                            </div>
+                        </div>  
                     </div>             
                 </div>
-            </div>
+            </div>  
             <hr class="mb-4">
             <div class="row">
                 <div class="col-md-12">

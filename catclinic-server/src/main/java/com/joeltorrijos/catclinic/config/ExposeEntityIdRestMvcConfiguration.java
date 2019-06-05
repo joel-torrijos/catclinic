@@ -12,6 +12,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.joeltorrijos.catclinic.model.Appointment;
 import com.joeltorrijos.catclinic.model.Condition;
 import com.joeltorrijos.catclinic.model.Patient;
 
@@ -22,6 +23,7 @@ public class ExposeEntityIdRestMvcConfiguration implements RepositoryRestConfigu
 	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
 		config.exposeIdsFor(Patient.class);
 		config.exposeIdsFor(Condition.class);
+		config.exposeIdsFor(Appointment.class);
 		
 	}
 

@@ -4,3 +4,4 @@ export * from './patients.model';
 export * from './condition.model';
 export * from './conditions.model';
 export * from './appointment.model';
+export * from './appointments.model';
