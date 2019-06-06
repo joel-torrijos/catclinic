@@ -1,8 +1,12 @@
 package com.joeltorrijos.catclinic.model;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,6 +20,12 @@ public class Appointment extends BaseEntity {
 	private Patient patient;
 	
 	private String notes;
+
+	@ManyToMany
+	@JoinTable(name = "diagnosis",
+			   joinColumns = @JoinColumn(name="appointment_id"),
+			   inverseJoinColumns = @JoinColumn(name="condition_id"))
+	private Set<Condition> diagnoses;
 
 	public Patient getPatient() {
 		return patient;
@@ -32,6 +42,16 @@ public class Appointment extends BaseEntity {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
+
+	public Set<Condition> getDiagnoses() {
+		return diagnoses;
+	}
+
+	public void setDiagnoses(Set<Condition> diagnoses) {
+		this.diagnoses = diagnoses;
+	}
+	
+	
 	
 	
 }

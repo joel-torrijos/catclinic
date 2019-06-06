@@ -53,12 +53,12 @@ export class ConditionEditorComponent implements OnInit {
       return;
     }
 
-    this.updatePatient(this.conditionForm.value);
+    this.updateCondition(this.conditionForm.value);
 
     this.conditionService.save(this.condition).subscribe((response) => this.goBack());
   }
 
-  updatePatient(values: Object) {
+  updateCondition(values: Object) {
     Object.assign(this.condition, values);
   }
 

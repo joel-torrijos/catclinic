@@ -1,6 +1,9 @@
 package com.joeltorrijos.catclinic.model;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 
 /*
  * Entity for medical condition
@@ -10,6 +13,9 @@ public class Condition extends BaseEntity {
 
 	private String name;
 	private String description;
+	
+	@ManyToMany(mappedBy="diagnoses")
+	private Set<Appointment> appointments;
 	
 	public Condition() {
 		
@@ -30,6 +36,13 @@ public class Condition extends BaseEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
+	public Set<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(Set<Appointment> appointments) {
+		this.appointments = appointments;
+	}
 	
 }
