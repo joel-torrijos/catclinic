@@ -20,7 +20,9 @@
                 <tr *ngFor="let appointment of appointments">
                     <td>{{appointment.id}}</td>
                     <td>{{appointment.patient.firstName}} {{appointment.patient.lastName}}</td>
-                    <td>{{appointment.description}}</td>
+                    <td>
+                        <h6><span class="badge badge-pill badge-secondary" *ngFor="let d of appointment.diagnoses">{{d.name}}</span></h6>
+                    </td>
                     <td>{{appointment.description}}</td>
                     <td class="d-flex justify-content-end">
                         <button class="btn btn-primary btn-sm mr-1" routerLink="./{{appointment.id}}/edit"><span class="oi oi-pencil"></span>&nbsp;Edit</button>

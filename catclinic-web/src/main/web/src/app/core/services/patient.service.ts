@@ -36,7 +36,7 @@ export class PatientService {
         if (!name.trim()) {
             return of({ _embedded: {patients: []}} as Patients);
         }
-        
+
         let params = new HttpParams()
                             .set('firstName', name)
                             .set('lastName', name);

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService, Patient, AppointmentService, Appointment, ConditionService, Conditions, Condition } from 'src/app/core';
-import { of, Observable } from 'rxjs';
-import { map, debounceTime, distinctUntilChanged, tap, switchMap, catchError } from 'rxjs/operators';
+import { Observable, of, empty } from 'rxjs';
+import { map, debounceTime, distinctUntilChanged, tap, switchMap, catchError, mergeMap } from 'rxjs/operators';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-appointment-editor',
@@ -17,7 +18,7 @@ export class AppointmentEditorComponent implements OnInit {
   searchFailed = false;
   appointmentForm : FormGroup;
   appointment : Appointment;
-  items = ['Pizza', 'Pasta', 'Parmesan'];
+  diagnoses = [];
 
   constructor(private appointmentService : AppointmentService,
               private patientService : PatientService,
@@ -29,8 +30,7 @@ export class AppointmentEditorComponent implements OnInit {
 
     this.appointmentForm = this.fb.group({
       patient: ['', Validators.required],
-      notes: [''],
-      items: [this.items]
+      notes: ['']
     });
   }
 
@@ -65,7 +65,12 @@ export class AppointmentEditorComponent implements OnInit {
   get f() { return this.appointmentForm.controls; }
 
   goBack() {
-    console.log(this.f.items.value);
+    let diagnoses = { _links: {}};
+    this.diagnoses.forEach((diagnosis, index) => {
+      diagnoses['_links'][index] = diagnosis._links.self.href;
+    });
+
+    console.log(JSON.stringify(diagnoses));
   }
 
   onSubmit() {
@@ -73,13 +78,38 @@ export class AppointmentEditorComponent implements OnInit {
       return;
     }
 
+    let formatted = { _links: {}};
+        this.diagnoses.forEach((diagnosis, index) => {
+            formatted['_links'][index] = diagnosis._links.self.href;
+        });
+
     this.f['patient'].setValue(this.patient._links.self.href);
-    this.appointmentService.save(this.appointmentForm.value).subscribe((response) => this.goBack());
+    this.appointmentService.save(this.appointmentForm.value).pipe(
+      mergeMap(link => this.appointmentService.saveDiagnoses(link,formatted)),
+      catchError((err, caught) => {
+        console.log(err);
+        return empty();
+      })
+    ).subscribe((response) => {
+      console.log("LOL");
+      this.goBack();
+    });
+    // this.appointmentService.saveDiagnoses({"href": "http://localhost:8080/appointments/2/diagnoses"},formatted).pipe(
+    //   catchError((err, caught) => {
+    //     console.log(err);
+    //     return empty();
+    //     })
+    // )
+    // .subscribe(data => {
+    //   console.log("done");});
   }
 
-  public requestAutocompleteItems = (text: string): Observable<Condition[]> => {
-    let httpParams = {} as HttpParams;
-    return this.conditionService.getAll(httpParams).pipe(map(data => data._embedded.conditions));
+  public requestConditions = (name: string): Observable<Condition[]> => {
+    let params = new HttpParams().set('name', name);
+    return this.conditionService.getAll(params).pipe(map(data => {
+      // console.log(data._embedded.conditions);
+      return data._embedded.conditions;
+    }));
   };
 
 

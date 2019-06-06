@@ -11,6 +11,8 @@ import com.joeltorrijos.catclinic.model.Patient;
 @Projection(name = "appointmentProjection", types = {Appointment.class})
 public interface AppointmentProjection {
 
+	Long getId();
+	
 	String getNotes();
 	
 	Patient getPatient();
