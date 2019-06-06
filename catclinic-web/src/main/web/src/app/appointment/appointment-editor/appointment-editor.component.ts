@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { PatientService, Patient, AppointmentService, Appointment } from 'src/app/core';
+import { PatientService, Patient, AppointmentService, Appointment, ConditionService, Conditions, Condition } from 'src/app/core';
 import { of, Observable } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged, tap, switchMap, catchError } from 'rxjs/operators';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-appointment-editor',
@@ -16,9 +17,11 @@ export class AppointmentEditorComponent implements OnInit {
   searchFailed = false;
   appointmentForm : FormGroup;
   appointment : Appointment;
+  items = ['Pizza', 'Pasta', 'Parmesan'];
 
   constructor(private appointmentService : AppointmentService,
               private patientService : PatientService,
+              private conditionService : ConditionService,
               private fb : FormBuilder) { }
 
   ngOnInit() {
@@ -26,7 +29,8 @@ export class AppointmentEditorComponent implements OnInit {
 
     this.appointmentForm = this.fb.group({
       patient: ['', Validators.required],
-      notes: ['']
+      notes: [''],
+      items: [this.items]
     });
   }
 
@@ -61,7 +65,7 @@ export class AppointmentEditorComponent implements OnInit {
   get f() { return this.appointmentForm.controls; }
 
   goBack() {
-
+    console.log(this.f.items.value);
   }
 
   onSubmit() {
@@ -72,6 +76,11 @@ export class AppointmentEditorComponent implements OnInit {
     this.f['patient'].setValue(this.patient._links.self.href);
     this.appointmentService.save(this.appointmentForm.value).subscribe((response) => this.goBack());
   }
+
+  public requestAutocompleteItems = (text: string): Observable<Condition[]> => {
+    let httpParams = {} as HttpParams;
+    return this.conditionService.getAll(httpParams).pipe(map(data => data._embedded.conditions));
+  };
 
 
 }

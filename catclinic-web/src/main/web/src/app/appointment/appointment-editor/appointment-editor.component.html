@@ -45,6 +45,10 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="">Conditions</label>
+                        <!-- <tag-input formControlName="items" secondaryPlaceholder="Enter Condition"></tag-input> -->
+                        <tag-input formControlName="items">
+                            <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
+                        </tag-input>
                     </div>
                 </div>
             </div>

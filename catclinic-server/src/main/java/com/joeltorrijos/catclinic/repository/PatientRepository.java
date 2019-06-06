@@ -18,7 +18,7 @@ import com.querydsl.core.types.dsl.StringPath;
 
 @RepositoryRestResource
 public interface PatientRepository extends JpaRepository<Patient, Long>, QuerydslPredicateExecutor<Patient>, 
-										QuerydslBinderCustomizer<QPatient>{
+										QuerydslBinderCustomizer<QPatient> {
 	
 	@Override
 	public default void customize(QuerydslBindings bindings, QPatient patient) {

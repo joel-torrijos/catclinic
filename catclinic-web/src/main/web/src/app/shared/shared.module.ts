@@ -3,7 +3,9 @@ import { HttpClientModule } from "@angular/common/http";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TagInputModule, TagInputDropdown } from 'ngx-chips';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
@@ -11,6 +13,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
         FormsModule,
         ReactiveFormsModule,
         NgbModule,
+        TagInputModule,
+        BrowserAnimationsModule,
         HttpClientModule,
         RouterModule
     ],
@@ -21,6 +25,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
         ReactiveFormsModule,
         HttpClientModule,
         RouterModule,
-        NgbModule]
+        NgbModule,
+        TagInputModule,
+        BrowserAnimationsModule
+    ]
 })
 export class SharedModule {}
