@@ -24,7 +24,7 @@ export class ConditionEditorComponent implements OnInit {
   ngOnInit() {
     this.conditionForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required])
+      description: new FormControl('')
     });
 
     this.route.paramMap.pipe(switchMap((params) => {

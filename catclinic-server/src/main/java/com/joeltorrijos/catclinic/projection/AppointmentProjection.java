@@ -1,5 +1,6 @@
 package com.joeltorrijos.catclinic.projection;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import org.springframework.data.rest.core.config.Projection;
@@ -12,6 +13,8 @@ import com.joeltorrijos.catclinic.model.Patient;
 public interface AppointmentProjection {
 
 	Long getId();
+	
+	LocalDateTime getCreatedDate();
 	
 	String getNotes();
 	

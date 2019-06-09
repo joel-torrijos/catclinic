@@ -1,31 +1,44 @@
 <div class="row">
-    <div class="col-md-8 offset-md-2">
+    <div class="col-md-10 offset-md-1">
         <div class="row mb-3">
             <div class="col-md-12 d-flex justify-content-between">
                 <h3>Appointments</h3>
                 <button class="btn btn-success btn-sm" routerLink="./new"><span class="oi oi-plus"></span>&nbsp;Add Appointments</button>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bg-light">
+                    <div class="form-group form-inline">
+                        <label for="exampleFormControlSelect1" class="mx-3">Appointment Date</label>
+                        <input class="form-control mr-3" type="date" id="example-date-input" [(ngModel)]="searchDate">
+                        <input class="form-control mr-3" type="text" id="example-date-input" [(ngModel)]="searchName" placeholder="Search Name">
+                        <button class="btn btn-secondary my-3" (click)="onSearch()"><span class="oi oi-magnifying-glass"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <table class="table table-striped table-hover">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Patient Name</th>
-                    <th scope="col">Conditions</th>
-                    <th scope="col">Status</th>
-                    <th scope="col"></th>
+                    <th scope="col" style="width: 15%" data-toggle="tooltip" data-placement="bottom" title="dd/mm/yyyy">Appointment Date</th>
+                    <th scope="col" style="width: 20%">Patient Name</th>
+                    <th scope="col" style="width: 35%">Conditions</th>
+                    <th scope="col" style="width: 10%">Status</th>
+                    <th scope="col" style="width: 30%"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let appointment of appointments">
-                    <td>{{appointment.id}}</td>
+                    <td>{{appointment.createdDate | date: 'dd/MM/yyyy h:mm a' }}</td>
                     <td>{{appointment.patient.firstName}} {{appointment.patient.lastName}}</td>
                     <td>
-                        <h6><span class="badge badge-pill badge-secondary" *ngFor="let d of appointment.diagnoses">{{d.name}}</span></h6>
+                        <h5><span class="badge badge-pill badge-secondary" *ngFor="let d of appointment.diagnoses">{{d.name}}</span></h5>
                     </td>
-                    <td>{{appointment.description}}</td>
+                    <td><h5><span class="badge badge-warning">For Payment</span></h5></td>
                     <td class="d-flex justify-content-end">
                         <button class="btn btn-primary btn-sm mr-1" routerLink="./{{appointment.id}}/edit"><span class="oi oi-pencil"></span>&nbsp;Edit</button>
+                        <br>
                         <button class="btn btn-danger btn-sm"><span class="oi oi-trash"></span>&nbsp;Delete</button>
                     </td>
                 </tr>
