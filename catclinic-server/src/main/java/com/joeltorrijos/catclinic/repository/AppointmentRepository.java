@@ -46,8 +46,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long>,
 								.and(appointment.patient.lastName.containsIgnoreCase(names[1])));
 				return predicate;
 			}
-			
-			 
+	 
 		});
 	}
 }

@@ -11,8 +11,8 @@
                 <div class="bg-light">
                     <div class="form-group form-inline">
                         <label for="exampleFormControlSelect1" class="mx-3">Appointment Date</label>
-                        <input class="form-control mr-3" type="date" id="example-date-input" [(ngModel)]="searchDate">
-                        <input class="form-control mr-3" type="text" id="example-date-input" [(ngModel)]="searchName" placeholder="Search Name">
+                        <input class="form-control mr-3" type="date" [(ngModel)]="searchDate">
+                        <input class="form-control mr-3" type="text" size="25" [(ngModel)]="searchName" placeholder="Search Name">
                         <button class="btn btn-secondary my-3" (click)="onSearch()"><span class="oi oi-magnifying-glass"></span></button>
                     </div>
                 </div>

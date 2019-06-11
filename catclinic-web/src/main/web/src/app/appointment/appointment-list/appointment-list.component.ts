@@ -38,12 +38,10 @@ export class AppointmentListComponent implements OnInit {
   }
 
   onSearch() {
-    const querySearchName = this.searchName === '' ? {} : {firstName: this.searchName, lastName: this.searchName};
-
     this.router.navigate(['/appointments'], { queryParams: 
       { createdDate: this.searchDate === '' ? '' : new Date(this.searchDate).toISOString() ,
         patient_firstName: this.searchName, 
-        patient_lastName: this.searchName }
+        patient_lastName:  this.searchName }
     });
   }
 

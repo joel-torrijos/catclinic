@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import { PatientService, Patient } from 'src/app/core';
+import { PatientService, Patient, GenderService, Gender } from 'src/app/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Observable, EMPTY } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
  
 @Component({
   selector: 'app-patient-editor',
@@ -16,16 +17,27 @@ export class PatientEditorComponent implements OnInit {
   editMode : boolean;
   patientForm : FormGroup;
   submitted = false;
+  genderOptions : Gender[];
 
   constructor(private patientService : PatientService,
+              private genderService : GenderService,
               private route : ActivatedRoute,
               private location: Location) { }
   
   ngOnInit() {
     this.patientForm = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required])
+      lastName: new FormControl('', [Validators.required]),
+      gender: new FormControl(''),
+      birthDate: new FormControl('')
     });
+    
+    this.genderService.getAll({} as HttpParams).subscribe(
+      response =>  {
+        this.genderOptions = response._embedded.genders;
+        this.patientForm.patchValue({gender: this.genderOptions[0].name});
+      }
+    );
 
     this.route.paramMap.pipe(switchMap((params) => {
       if(params.get('id') !== null) {
@@ -38,9 +50,11 @@ export class PatientEditorComponent implements OnInit {
       }})
     ).subscribe(patient => {
       this.patient = patient;
-      this.patientForm.setValue({
+      this.patientForm.patchValue({
         firstName: this.patient.firstName, 
-        lastName: this.patient.lastName});
+        lastName: this.patient.lastName,
+        gender: this.patient.gender.name,
+        birthDate: this.patient.birthDate.toString().split('T')[0]});
     });
   }
 
@@ -60,6 +74,7 @@ export class PatientEditorComponent implements OnInit {
 
   updatePatient(values: Object) {
     Object.assign(this.patient, values);
+    this.patient.birthDate = new Date(this.patientForm.controls.birthDate.value + 'T00:00:00.000Z');
   }
 
   goBack() {

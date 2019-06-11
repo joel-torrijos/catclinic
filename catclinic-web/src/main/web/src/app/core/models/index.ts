@@ -5,3 +5,5 @@ export * from './condition.model';
 export * from './conditions.model';
 export * from './appointment.model';
 export * from './appointments.model';
+export * from './gender.model';
+export * from './genders.model';
