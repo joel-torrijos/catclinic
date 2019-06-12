@@ -5,6 +5,7 @@ import { map, debounceTime, distinctUntilChanged, tap, switchMap, catchError, me
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class AppointmentEditorComponent implements OnInit {
   constructor(private appointmentService : AppointmentService,
               private patientService : PatientService,
               private conditionService : ConditionService,
-              private fb : FormBuilder) { }
+              private fb : FormBuilder,
+              private route : ActivatedRoute) { }
 
   ngOnInit() {
     this.patient = '';
@@ -32,6 +34,21 @@ export class AppointmentEditorComponent implements OnInit {
       patient: ['', Validators.required],
       notes: ['']
     });
+
+    this.route.url.pipe(switchMap(params => {
+      if(params[1] && params[2].path == 'diagnose') {
+        const id = params[1].path;
+        return this.appointmentService.get(id);
+      }
+    })).subscribe(x => {
+      this.appointment = x;
+    });
+    // this.route.paramMap.pipe(switchMap((params) => {
+    //   if(params.get('id') && this.route.url[2] == 'diagnose') {
+    //     console.log("diagnose mode");
+    //   }
+    // })).subscribe();
+
   }
 
   searchA = (text$: Observable<string>) =>
@@ -69,8 +86,6 @@ export class AppointmentEditorComponent implements OnInit {
     this.diagnoses.forEach((diagnosis, index) => {
       diagnoses['_links'][index] = diagnosis._links.self.href;
     });
-
-    console.log(JSON.stringify(diagnoses));
   }
 
   onSubmit() {
@@ -87,11 +102,9 @@ export class AppointmentEditorComponent implements OnInit {
     this.appointmentService.save(this.appointmentForm.value).pipe(
       mergeMap(link => this.appointmentService.saveDiagnoses(link,formatted)),
       catchError((err, caught) => {
-        console.log(err);
         return empty();
       })
     ).subscribe((response) => {
-      console.log("LOL");
       this.goBack();
     });
     // this.appointmentService.saveDiagnoses({"href": "http://localhost:8080/appointments/2/diagnoses"},formatted).pipe(
@@ -107,7 +120,6 @@ export class AppointmentEditorComponent implements OnInit {
   public requestConditions = (name: string): Observable<Condition[]> => {
     let params = new HttpParams().set('name', name);
     return this.conditionService.getAll(params).pipe(map(data => {
-      // console.log(data._embedded.conditions);
       return data._embedded.conditions;
     }));
   };

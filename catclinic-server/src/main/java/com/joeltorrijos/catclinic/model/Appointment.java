@@ -26,6 +26,12 @@ public class Appointment extends BaseEntity {
 			   joinColumns = @JoinColumn(name="appointment_id"),
 			   inverseJoinColumns = @JoinColumn(name="condition_id"))
 	private Set<Condition> diagnoses;
+	
+	private Status status;
+	
+	public Appointment() {
+		this.status = Status.PENDING;
+	}
 
 	public Patient getPatient() {
 		return patient;
@@ -51,7 +57,30 @@ public class Appointment extends BaseEntity {
 		this.diagnoses = diagnoses;
 	}
 	
-	
-	
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public static enum Status {
+		PENDING ("Pending"), 
+		FOR_PAYMENT ("For Payment"), 
+		PAID ("Paid"), 
+		CANCELLED ("Cancelled");
+		
+		private String value;
+		
+		Status(String value) {
+			this.value = value;
+		}
+		
+		public String getValue() {
+			return this.value;
+		}
+		
+	}
 	
 }

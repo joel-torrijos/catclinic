@@ -35,9 +35,19 @@
                     <td>
                         <h5><span class="badge badge-pill badge-secondary" *ngFor="let d of appointment.diagnoses">{{d.name}}</span></h5>
                     </td>
-                    <td><h5><span class="badge badge-warning">For Payment</span></h5></td>
+                    <td>
+                        <h5>
+                            <span class="badge" 
+                                [ngClass]="{'badge-info': appointment.status === 'Pending',
+                                            'badge-warning': appointment.status === 'For Payment',
+                                            'badge-success': appointment.status === 'Paid',
+                                            'badge-danger': appointment.status === 'Cancelled'}">
+                                {{ appointment.status }}
+                            </span>
+                        </h5>
+                    </td>
                     <td class="d-flex justify-content-end">
-                        <button class="btn btn-primary btn-sm mr-1" routerLink="./{{appointment.id}}/edit"><span class="oi oi-pencil"></span>&nbsp;Edit</button>
+                        <button class="btn btn-primary btn-sm mr-1" routerLink="./{{appointment.id}}/diagnose"><span class="oi oi-pencil"></span>&nbsp;Diagnose</button>
                         <br>
                         <button class="btn btn-danger btn-sm"><span class="oi oi-trash"></span>&nbsp;Delete</button>
                     </td>

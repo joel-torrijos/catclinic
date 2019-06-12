@@ -5,7 +5,8 @@ import { AppointmentEditorComponent } from "./appointment-editor/appointment-edi
 
 const routes : Routes = [
     { path: 'appointments', component: AppointmentListComponent},
-    { path: 'appointments/new', component: AppointmentEditorComponent}
+    { path: 'appointments/new', component: AppointmentEditorComponent},
+    { path: 'appointments/:id/diagnose', component: AppointmentEditorComponent}
 ]
 
 @NgModule({

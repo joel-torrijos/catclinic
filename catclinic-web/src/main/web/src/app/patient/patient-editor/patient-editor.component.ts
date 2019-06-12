@@ -54,7 +54,7 @@ export class PatientEditorComponent implements OnInit {
         firstName: this.patient.firstName, 
         lastName: this.patient.lastName,
         gender: this.patient.gender.name,
-        birthDate: this.patient.birthDate.toString().split('T')[0]});
+        birthDate: this.patient.birthDate ? this.patient.birthDate.toString().split('T')[0] : '' });
     });
   }
 

@@ -18,6 +18,10 @@ export class AppointmentService {
     getAll(params: HttpParams): Observable<Appointments> {
         return this.apiService.get('/appointments', params);
     }
+
+    get(id: string): Observable<Appointment> {
+        return this.apiService.get('/appointments/' + id);
+    }
     
     save(appointment) {
         // let formatted = { _links: {}};
