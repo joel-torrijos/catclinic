@@ -8,6 +8,9 @@ export interface Appointment {
     _links: {
         self: Link,
         condition: Link,
-        patient: Link
+        patient: Link,
+        diagnose?: Link,
+        pay?: Link,
+        cancel?: Link
     }
 }

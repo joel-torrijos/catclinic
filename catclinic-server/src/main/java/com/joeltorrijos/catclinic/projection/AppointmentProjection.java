@@ -1,29 +1,23 @@
 package com.joeltorrijos.catclinic.projection;
 
-import java.time.LocalDateTime;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.joeltorrijos.catclinic.model.Appointment;
-import com.joeltorrijos.catclinic.model.Appointment.Status;
-import com.joeltorrijos.catclinic.model.Condition;
-import com.joeltorrijos.catclinic.model.Patient;
 
 @Projection(name = "appointmentProjection", types = {Appointment.class})
-public interface AppointmentProjection {
+public interface AppointmentProjection extends CustomLinkedAppointmentProjection {
 
-	Long getId();
-	
-	LocalDateTime getCreatedDate();
-	
-	String getNotes();
-	
-	Patient getPatient();
-	
-	Set<Condition> getDiagnoses();
-	
-	@Value("#{target.status.getValue()}")
+	@Value("#{target.status.value}")
 	String getStatus();
+	
+	@JsonIgnore
+	boolean isPending();
+	
+	@JsonIgnore
+	boolean isForPayment();
+	
+	@JsonIgnore
+	boolean isCancellable();
 }

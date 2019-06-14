@@ -10,10 +10,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.joeltorrijos.catclinic.projection.CustomLinkedAppointmentProjection;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Appointment extends BaseEntity {
+public class Appointment extends BaseEntity implements CustomLinkedAppointmentProjection {
 
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="patient_id", nullable=false)
@@ -59,6 +60,18 @@ public class Appointment extends BaseEntity {
 	
 	public Status getStatus() {
 		return status;
+	}
+	
+	public boolean isPending() {
+		return status.equals(Status.PENDING);
+	}
+	
+	public boolean isForPayment() {
+		return status.equals(Status.FOR_PAYMENT);
+	}
+	
+	public boolean isCancellable() {
+		return status.equals(Status.PENDING) || status.equals(Status.FOR_PAYMENT);
 	}
 
 	public void setStatus(Status status) {

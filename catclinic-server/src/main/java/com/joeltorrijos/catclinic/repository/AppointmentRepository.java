@@ -2,9 +2,6 @@ package com.joeltorrijos.catclinic.repository;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.ChronoField;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -21,6 +18,7 @@ import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.StringPath;
 
 @RepositoryRestResource(excerptProjection = AppointmentProjection.class)
+//@RepositoryRestResource
 public interface AppointmentRepository extends JpaRepository<Appointment, Long>, QuerydslPredicateExecutor<Appointment>, 
 											QuerydslBinderCustomizer<QAppointment> {
 

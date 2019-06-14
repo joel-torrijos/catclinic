@@ -30,7 +30,7 @@ public class BaseEntity {
 	@LastModifiedDate
 	@Column(name = "last_modified_date")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-	private LocalDateTime lasModifiedDate;
+	private LocalDateTime lastModifiedDate;
 	
 	public Long getId() {
 		return id;
@@ -44,12 +44,12 @@ public class BaseEntity {
 		this.createdDate = createdDate;
 	}
 
-	public LocalDateTime getLasModifiedDate() {
-		return lasModifiedDate;
+	public LocalDateTime getLastModifiedDate() {
+		return lastModifiedDate;
 	}
 
-	public void setLasModifiedDate(LocalDateTime lasModifiedDate) {
-		this.lasModifiedDate = lasModifiedDate;
+	public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 	
 	

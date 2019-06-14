@@ -20,7 +20,8 @@ export class AppointmentService {
     }
 
     get(id: string): Observable<Appointment> {
-        return this.apiService.get('/appointments/' + id);
+        const params = new HttpParams().set('projection', 'appointmentProjection');
+        return this.apiService.get('/appointments/' + id, params);
     }
     
     save(appointment) {

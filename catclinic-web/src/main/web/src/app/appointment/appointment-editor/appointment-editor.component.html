@@ -38,11 +38,11 @@
                         <!-- <a href="#" class="col-md-7"><<input  type="text" class="form-control-plaintext" 
                                 readonly [value]="appointment._embedded.patient.firstName + ' ' + appointment._embedded.patient.lastName">>
                                 </a> -->
-                        <a class="col-md-7 form-control-plaintext" [routerLink]="['/patients', appointment._embedded.patient.id, 'edit']">{{appointment._embedded.patient.firstName + ' ' + appointment._embedded.patient.lastName }}</a>
+                        <a class="col-md-7 form-control-plaintext" [routerLink]="['/patients', appointment.patient.id, 'edit']">{{appointment.patient.firstName + ' ' + appointment.patient.lastName }}</a>
                     </div>
                     <div class="form-group form-inline">
                         <label for="" class="col-md-5 control-label justify-content-start text-muted">Date of Birth</label>
-                        <input type="text" class="form-control-plaintext col-md-7" readonly [value]="appointment._embedded.patient.birthDate | date : 'mediumDate'">
+                        <input type="text" class="form-control-plaintext col-md-7" readonly [value]="appointment.patient.birthDate | date : 'mediumDate'">
                     </div>
                     <div class="form-group form-inline">
                         <label for="" class="col-md-5 control-label justify-content-start text-muted">Appointment Date</label>
@@ -51,10 +51,10 @@
                     <div class="form-group form-inline">
                         <label for="" class="col-md-5 control-label justify-content-start text-muted">Appointment Status</label>
                         <span class="ml-3 badge" 
-                            [ngClass]="{'badge-info': appointment.status === 'Pending'.toUpperCase(),
-                                    'badge-warning': appointment.status === 'For Payment'.toUpperCase(),
-                                    'badge-success': appointment.status === 'Paid'.toUpperCase(),
-                                    'badge-danger': appointment.status === 'Cancelled'.toUpperCase()}">
+                            [ngClass]="{'badge-info': appointment.status === 'Pending',
+                                    'badge-warning': appointment.status === 'For Payment',
+                                    'badge-success': appointment.status === 'Paid',
+                                    'badge-danger': appointment.status === 'Cancelled'}">
                                     {{appointment.status}}
                         </span>
                     </div>
@@ -62,7 +62,7 @@
                 <div class="col-md-6">
                     <div class="form-group form-inline">
                         <label for="" class="col-md-5 control-label justify-content-start text-muted">Gender</label>
-                        <input type="text" class="form-control-plaintext col-md-7" readonly [value]="appointment._embedded.patient.gender">
+                        <input type="text" class="form-control-plaintext col-md-7" readonly [value]="appointment.patient.gender">
                     </div>
                     <div class="form-group form-inline">
                         <label for="" class="col-md-5 control-label justify-content-start text-muted">Address</label>
@@ -70,7 +70,7 @@
                     </div>
                     <div class="form-group form-inline">
                         <label for="" class="col-md-5 control-label justify-content-start text-muted">Last Update</label>
-                        <input type="text" class="form-control-plaintext col-md-7" readonly [value]="appointment.lastUpdateDate | date : 'medium'">
+                        <input type="text" class="form-control-plaintext col-md-7" readonly [value]="appointment.lasModifiedDate | date : 'medium'">
                     </div>
                 </div>
             </div>
