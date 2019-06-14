@@ -1,6 +1,7 @@
 package com.joeltorrijos.catclinic.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,45 +10,31 @@ import org.springframework.hateoas.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.joeltorrijos.catclinic.model.Appointment;
-import com.joeltorrijos.catclinic.model.Condition;
-import com.joeltorrijos.catclinic.model.Appointment.Status;
-import com.joeltorrijos.catclinic.repository.AppointmentRepository;
-import com.joeltorrijos.catclinic.repository.ConditionRepository;
+import com.joeltorrijos.catclinic.service.AppointmentService;
 
 @RepositoryRestController
 @RequestMapping("/appointments")
 public class AppointmentController {
 	
 	@Autowired
-	private AppointmentRepository appointmentRepository;
-	
-	@Autowired
-	private ConditionRepository conditionRepository;
-	
+	private AppointmentService appointmentService;
 	
 	@SuppressWarnings("unchecked")
 	@PatchMapping(value = "/{id}/diagnose")
     public ResponseEntity<?> diagnose(@PathVariable Long id, @RequestBody Map<Object, Object> fields) {
-		Appointment appointment = appointmentRepository.findById(id).get();
+		String notes = (String) fields.get("notes");
+		List<Integer> conditionIds = (ArrayList<Integer>) fields.get("conditions");
 		
-		appointment.setNotes((String) fields.get("notes"));
-		
-		appointment.getDiagnoses().clear();
-		
-		for(Integer conditionId : (ArrayList<Integer>) fields.get("conditions")) {
-			Condition condition = conditionRepository.findById(Long.valueOf(conditionId.longValue())).get();
-			appointment.getDiagnoses().add(condition);
-		}
-		
-		appointment.setStatus(Status.FOR_PAYMENT);
-		
-		appointmentRepository.save(appointment);
-		
-		return ResponseEntity.ok(new Resource<>(appointment));
+		return ResponseEntity.ok(new Resource<>(appointmentService.diagnose(id, notes, conditionIds)));
+    }
+	
+	@PostMapping(value = "/{id}/cancel")
+    public ResponseEntity<?> cancel(@PathVariable Long id) {
+		return ResponseEntity.ok(new Resource<>(appointmentService.cancel(id)));
     }
 
 }
