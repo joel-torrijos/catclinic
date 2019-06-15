@@ -9,11 +9,40 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="bg-light">
-                    <div class="form-group form-inline">
-                        <label for="exampleFormControlSelect1" class="mx-3">Appointment Date</label>
-                        <input class="form-control mr-3" type="date" [(ngModel)]="searchDate">
-                        <input class="form-control mr-3" type="text" size="25" [(ngModel)]="searchName" placeholder="Search Name">
-                        <button class="btn btn-secondary my-3" (click)="onSearch()"><span class="oi oi-magnifying-glass"></span></button>
+                    <div class="form-group form-inline justify-content-between" >
+                        <div class="input-group">
+                            <div class="input-group-prepend ml-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Appointment Date</label>
+                            </div>
+                            <input class="form-control mr-3" type="date" [(ngModel)]="searchDate">
+                        </div>
+                        <div>
+                            <input class="form-control mr-3" type="text" size="25" [(ngModel)]="searchName" placeholder="Search Patient Name">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="statusSelect">Appointment Status</label>
+                            </div>
+                            <select class="custom-select" id="statusSelect" [(ngModel)]="searchStatus">
+                                <option [ngValue]="statusOption" *ngFor="let statusOption of statusOptions">{{ statusOption.display }}</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="sortBySelect">Sort By</label>
+                            </div>
+                            <select class="custom-select" id="sortBySelect" [(ngModel)]="sortBy">
+                                    <option [ngValue]="sortOption" *ngFor="let sortOption of sortOptions">{{ sortOption.display }}</option>
+                            </select>
+                        </div>
+                        <div class="btn-toolbar my-3" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <button class="btn btn-outline-secondary" (click)="onRemoveFilter()"><span class="oi oi-delete"></span>&nbsp;Remove Filters</button>
+                            </div>
+                            <div class="btn-group mr-3" role="group" aria-label="Second group">
+                                <button class="btn btn-secondary" (click)="onSearch()"><span class="oi oi-magnifying-glass"></span>&nbsp;Search</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -80,10 +109,6 @@
                     </ul>
                 </nav>
             </div>
-        </div>
-
-        <div *ngIf="(response$ | async) as resp">
-            <h1 *ngFor="let a of (response$ | async)?._embedded.appointments"> {{a.patient.firstName}} </h1>
         </div>
     </div>
 </div>

@@ -14,9 +14,18 @@ import { EMPTY } from '@angular/core/src/render3/definition';
 })
 export class AppointmentListComponent implements OnInit {
   response : Appointments;
+  statusOptions = [ {value: '', display: 'All'},
+    {value: 'PENDING', display: 'Pending'},
+    {value: 'FOR PAYMENT', display: 'For Payment'},
+    {value: 'PAID', display: 'Paid'},
+    {value: 'CANCELLED', display: 'Cancelled'}
+  ];
+  sortOptions = [ {value: 'status', display: 'Status'} ];
   searchDate: string;
   searchName: string = '';
-
+  searchStatus = this.statusOptions[0];
+  sortBy = this.sortOptions[0];
+                    
   constructor(private appointmentService : AppointmentService,
               private route: ActivatedRoute,
               private router : Router) { }
@@ -35,14 +44,16 @@ export class AppointmentListComponent implements OnInit {
     var today = new Date();
     this.searchDate = new Date(today.getTime() - (today.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
 
-    this.router.navigate(['/appointments'], { queryParams: { createdDate: new Date(this.searchDate).toISOString() }, queryParamsHandling: 'merge'  });
+    this.router.navigate(['/appointments'], { queryParams: { createdDate: new Date(this.searchDate).toISOString(), sort : this.sortBy.value }, queryParamsHandling: 'merge'  });
   }
 
   onSearch() {
     this.router.navigate(['/appointments'], { queryParams: 
       { createdDate: this.searchDate === '' ? '' : new Date(this.searchDate).toISOString() ,
         patient_firstName: this.searchName, 
-        patient_lastName:  this.searchName }
+        patient_lastName:  this.searchName,
+        status: this.searchStatus.value,
+        sort: this.sortBy.value }
     });
   }
 
@@ -50,5 +61,11 @@ export class AppointmentListComponent implements OnInit {
     this.appointmentService
       .cancel(appointment._links.cancel)
       .subscribe(() => this.refreshToken$.next(undefined));
+  }
+
+  onRemoveFilter() {
+    this.searchDate = '';
+    this.searchName = '';
+    this.searchStatus = this.statusOptions[0];
   }
 }
