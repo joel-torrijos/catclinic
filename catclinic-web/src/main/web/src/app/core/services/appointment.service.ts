@@ -42,4 +42,8 @@ export class AppointmentService {
     diagnose(link: Link, diagnosis: any) {
         return this.apiService.post(link, diagnosis, httpOptions);
     }
+
+    pay(link: Link, amountPaid: {number}) {
+        return this.apiService.post(link, amountPaid, httpOptions);
+    }
 }

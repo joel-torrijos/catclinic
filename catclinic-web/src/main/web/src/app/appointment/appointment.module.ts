@@ -4,6 +4,7 @@ import { AppointmentRoutingModule } from "./appointment-routing.module";
 import { SharedModule } from "../shared";
 import { AppointmentEditorComponent } from './appointment-editor/appointment-editor.component';
 import { AppointmentCancelModal } from "./appointment-list/appointment-cancel-modal.component";
+import { AppointmentPayModal } from "./appointment-list/appointment-pay-modal.component";
 
 @NgModule({
     imports: [
@@ -13,11 +14,13 @@ import { AppointmentCancelModal } from "./appointment-list/appointment-cancel-mo
     declarations: [
         AppointmentListComponent, 
         AppointmentEditorComponent,
-        AppointmentCancelModal
+        AppointmentCancelModal,
+        AppointmentPayModal
     ],
     providers: [],
     entryComponents: [
-        AppointmentCancelModal
+        AppointmentCancelModal,
+        AppointmentPayModal
     ]
 })
 export class AppointmentModule { }

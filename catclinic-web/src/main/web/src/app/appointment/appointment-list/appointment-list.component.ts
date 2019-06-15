@@ -6,6 +6,7 @@ import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppointmentCancelModal } from './appointment-cancel-modal.component';
+import { AppointmentPayModal } from './appointment-pay-modal.component';
 
 declare var $ : any;
 
@@ -68,6 +69,12 @@ export class AppointmentListComponent implements OnInit {
 
   openCancelModal(appointment : Appointment){
     const modalRef = this.modalService.open(AppointmentCancelModal);
+    modalRef.componentInstance.appointment = appointment;
+    modalRef.result.then((result) => this.refreshToken$.next(undefined));
+  }
+
+  openPayModal(appointment : Appointment){
+    const modalRef = this.modalService.open(AppointmentPayModal);
     modalRef.componentInstance.appointment = appointment;
     modalRef.result.then((result) => this.refreshToken$.next(undefined));
   }

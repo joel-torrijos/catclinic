@@ -51,10 +51,11 @@
             <thead class="thead-light">
                 <tr>
                     <th scope="col" style="width: 15%" data-toggle="tooltip" data-placement="bottom" title="dd/mm/yyyy">Appointment Date</th>
-                    <th scope="col" style="width: 20%">Patient Name</th>
-                    <th scope="col" style="width: 35%">Conditions</th>
+                    <th scope="col" style="width: 15%">Patient Name</th>
+                    <th scope="col" style="width: 30%">Conditions</th>
                     <th scope="col" style="width: 10%">Status</th>
-                    <th scope="col" style="width: 30%"></th>
+                    <th scope="col" style="width: 10%">Amount Paid</th>
+                    <th scope="col" style="width: 20%"></th>
                 </tr>
             </thead>
             <tbody>
@@ -75,10 +76,11 @@
                             </span>
                         </h5>
                     </td>
+                    <td >₱&nbsp;{{appointment.amountPaid ? appointment.amountPaid : 0}}</td>
                     <td class="d-flex justify-content-end">
                         <button class="btn btn-light btn-sm mr-1" routerLink="./{{appointment.id}}/diagnose"><span class="oi oi-eye"></span>&nbsp;View</button>
                         <button class="btn btn-primary btn-sm mr-1" routerLink="./{{appointment.id}}/diagnose" *ngIf="appointment._links.diagnose"><span class="oi oi-clipboard"></span>&nbsp;Diagnose</button>
-                        <button class="btn btn-primary btn-sm mr-1" routerLink="./{{appointment.id}}/pay" *ngIf="appointment._links.pay"><span class="oi oi-dollar"></span>&nbsp;Pay</button>
+                        <button class="btn btn-primary btn-sm mr-1" *ngIf="appointment._links.pay" (click)="openPayModal(appointment)"><span class="oi oi-dollar"></span>&nbsp;Pay</button>
                         <button class="btn btn-danger btn-sm" *ngIf="appointment._links.cancel" (click)="openCancelModal(appointment)"><span class="oi oi-circle-x"></span>&nbsp;Cancel</button>
                     </td>
                 </tr>

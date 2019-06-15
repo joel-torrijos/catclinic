@@ -1,5 +1,6 @@
 package com.joeltorrijos.catclinic.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,14 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public Appointment cancel(Long id) {
 		Appointment appointment = appointmentRepository.findById(id).get();
 		appointment.setStatus(Status.CANCELLED);
+		return appointmentRepository.save(appointment);
+	}
+
+	@Override
+	public Appointment pay(Long id, BigDecimal amountPaid) {
+		Appointment appointment = appointmentRepository.findById(id).get();
+		appointment.setAmountPaid(amountPaid);
+		appointment.setStatus(Status.PAID);
 		return appointmentRepository.save(appointment);
 	}
 

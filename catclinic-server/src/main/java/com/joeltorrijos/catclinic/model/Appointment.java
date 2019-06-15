@@ -1,5 +1,6 @@
 package com.joeltorrijos.catclinic.model;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -29,6 +30,8 @@ public class Appointment extends BaseEntity implements CustomLinkedAppointmentPr
 	private Set<Condition> diagnoses;
 	
 	private Status status;
+	
+	private BigDecimal amountPaid;
 	
 	public Appointment() {
 		this.status = Status.PENDING;
@@ -62,6 +65,14 @@ public class Appointment extends BaseEntity implements CustomLinkedAppointmentPr
 		return status;
 	}
 	
+	public BigDecimal getAmountPaid() {
+		return amountPaid;
+	}
+
+	public void setAmountPaid(BigDecimal amountPaid) {
+		this.amountPaid = amountPaid;
+	}
+
 	public boolean isPending() {
 		return status.equals(Status.PENDING);
 	}

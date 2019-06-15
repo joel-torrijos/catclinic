@@ -1,5 +1,6 @@
 package com.joeltorrijos.catclinic.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -37,5 +38,12 @@ public class AppointmentController {
     public ResponseEntity<?> cancel(@PathVariable Long id) {
 		return ResponseEntity.ok(new Resource<>(appointmentService.cancel(id)));
     }
+	
+	@PostMapping(value = "/{id}/pay")
+    public ResponseEntity<?> pay(@PathVariable Long id, @RequestBody  Map<Object, Object> fields) {
+		BigDecimal amountPaid = new BigDecimal((String) fields.get("amountPaid"));
+		return ResponseEntity.ok(new Resource<>(appointmentService.pay(id, amountPaid)));
+    }
+
 
 }

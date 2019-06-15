@@ -7,6 +7,7 @@ export interface Patient {
     lastName: string,
     gender: Gender,
     birthDate: Date,
+    amountPaid: number,
     _links: {
         self: Link,
         patient: Link

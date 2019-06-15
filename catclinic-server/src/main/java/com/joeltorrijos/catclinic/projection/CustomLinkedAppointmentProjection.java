@@ -1,5 +1,6 @@
 package com.joeltorrijos.catclinic.projection;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -25,4 +26,6 @@ public interface CustomLinkedAppointmentProjection {
 	boolean isForPayment();
 	
 	boolean isCancellable();
+	
+	BigDecimal getAmountPaid();
 }
