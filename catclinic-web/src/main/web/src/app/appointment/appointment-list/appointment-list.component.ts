@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Appointments, Appointment, AppointmentService, Link } from 'src/app/core';
-import { ActivatedRoute, Router, UrlTree } from '@angular/router';
+import { Appointments, Appointment, AppointmentService } from 'src/app/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { formatDate, DatePipe } from '@angular/common';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { EMPTY } from '@angular/core/src/render3/definition';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AppointmentCancelModal } from './appointment-cancel-modal.component';
+
+declare var $ : any;
 
 @Component({
   selector: 'app-appointment-list',
@@ -28,7 +30,8 @@ export class AppointmentListComponent implements OnInit {
                     
   constructor(private appointmentService : AppointmentService,
               private route: ActivatedRoute,
-              private router : Router) { }
+              private router : Router,
+              private modalService : NgbModal) { }
 
   private readonly refreshToken$ = new BehaviorSubject(undefined);
 
@@ -57,15 +60,15 @@ export class AppointmentListComponent implements OnInit {
     });
   }
 
-  onCancel(appointment : Appointment) {
-    this.appointmentService
-      .cancel(appointment._links.cancel)
-      .subscribe(() => this.refreshToken$.next(undefined));
-  }
-
   onRemoveFilter() {
     this.searchDate = '';
     this.searchName = '';
     this.searchStatus = this.statusOptions[0];
+  }
+
+  openCancelModal(appointment : Appointment){
+    const modalRef = this.modalService.open(AppointmentCancelModal);
+    modalRef.componentInstance.appointment = appointment;
+    modalRef.result.then((result) => this.refreshToken$.next(undefined));
   }
 }

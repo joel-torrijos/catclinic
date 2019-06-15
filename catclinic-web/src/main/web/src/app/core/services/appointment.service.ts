@@ -38,4 +38,8 @@ export class AppointmentService {
     cancel(link : Link) {
         return this.apiService.post(link, {}, httpOptions);
     }
+
+    diagnose(link: Link, diagnosis: any) {
+        return this.apiService.post(link, diagnosis, httpOptions);
+    }
 }

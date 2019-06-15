@@ -9,7 +9,6 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +25,7 @@ public class AppointmentController {
 	private AppointmentService appointmentService;
 	
 	@SuppressWarnings("unchecked")
-	@PatchMapping(value = "/{id}/diagnose")
+	@PostMapping(value = "/{id}/diagnose")
     public ResponseEntity<?> diagnose(@PathVariable Long id, @RequestBody Map<Object, Object> fields) {
 		String notes = (String) fields.get("notes");
 		List<Integer> conditionIds = (ArrayList<Integer>) fields.get("conditions");

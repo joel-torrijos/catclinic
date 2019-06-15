@@ -6,6 +6,7 @@ import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class AppointmentEditorComponent implements OnInit {
               private patientService : PatientService,
               private conditionService : ConditionService,
               private fb : FormBuilder,
-              private route : ActivatedRoute) { }
+              private route : ActivatedRoute,
+              private location: Location) { }
 
   ngOnInit() {
     this.patient = '';
@@ -81,6 +83,7 @@ export class AppointmentEditorComponent implements OnInit {
 
   get f() { return this.appointmentForm.controls; }
 
+  //  TODO: 
   goBack() {
     let diagnoses = { _links: {}};
     this.diagnoses.forEach((diagnosis, index) => {
@@ -123,6 +126,11 @@ export class AppointmentEditorComponent implements OnInit {
       return data._embedded.conditions;
     }));
   };
+
+  onSaveDiagnosis() {
+    let diagnosis = { notes : this.f.notes.value, conditions: this.diagnoses.map(x=> x.id)};
+    return this.appointmentService.diagnose(this.appointment._links.diagnose, diagnosis).subscribe(x => this.location.back());
+  }
 
 
 }
