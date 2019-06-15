@@ -25,30 +25,17 @@ export class AppointmentService {
     }
     
     save(appointment) {
-        // let formatted = { _links: {}};
-        // diagnoses.forEach((diagnosis, index) => {
-        //     formatted['_links'][index] = diagnosis._links.self.href;
-        // });
-        
-        console.log("saving");
-        // console.log(appointment);
-        // console.log(diagnoses);
-        // return this.apiService.post('/appointments', appointment, httpOptions).pipe(map(data => data));
-        // return this.apiService.post('/appointments', appointment, httpOptions)
-        //             .pipe(switchMap(response => {
-        //                 return this.saveDiagnoses(response._links.diagnoses, diagnoses);
-        //             }));
+        // console.log("saving");
         return this.apiService.post('/appointments', appointment, httpOptions).pipe(map(data => data._links.diagnoses));
     }
 
     saveDiagnoses(link : Link, diagnoses: any) {
-        // let formatted = { _links: {}};
-        // diagnoses.forEach((diagnosis, index) => {
-        //     formatted['_links'][index] = diagnosis._links.self.href;
-        // });
-    
-        console.log("saving diagnoses to " + link.href);
-        console.log(JSON.stringify(diagnoses));
-        return this.apiService.postWithLink(link, diagnoses, httpOptions);
+        // console.log("saving diagnoses to " + link.href);
+        // console.log(JSON.stringify(diagnoses));
+        return this.apiService.post(link, diagnoses, httpOptions);
+    }
+
+    cancel(link : Link) {
+        return this.apiService.post(link, {}, httpOptions);
     }
 }
