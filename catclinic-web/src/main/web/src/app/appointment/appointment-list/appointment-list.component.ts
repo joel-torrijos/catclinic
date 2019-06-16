@@ -16,7 +16,6 @@ declare var $ : any;
   styleUrls: ['./appointment-list.component.css']
 })
 export class AppointmentListComponent implements OnInit {
-  response : Appointments;
   statusOptions = [ {value: '', display: 'All'},
     {value: 'PENDING', display: 'Pending'},
     {value: 'FOR PAYMENT', display: 'For Payment'},

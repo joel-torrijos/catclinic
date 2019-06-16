@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Patients, Patient } from 'src/app/core';
 import { PatientService } from 'src/app/core/services';
-import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap, combineLatest } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 
 @Component({
@@ -11,22 +11,38 @@ import { HttpParams } from '@angular/common/http';
   styleUrls: ['./patient-list.component.css']
 })
 export class PatientListComponent implements OnInit {
-  response : Patients;
-  patients : Patient[];
-  pages: number[];
+  searchFirstName = '';
+  searchLastName = '';
+  sortOptions = [ {value: 'firstName', display: 'First Name'},
+                  {value: 'lastName', display: 'Last Name'}];
+  sortBy = this.sortOptions[1];
 
   constructor(private patientService : PatientService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private router : Router) { }
+
+  private readonly response$ = this.route.queryParams
+    .pipe(switchMap(
+        (queryParams) => {
+          let httpParams = new HttpParams({ fromObject: queryParams });
+          return this.patientService.getAll(httpParams);
+    }));
 
   ngOnInit() {
-    this.route.queryParams.pipe(switchMap(param=> {
-      let httpParams = new HttpParams({ fromObject: param });
-      return this.patientService.getAll(httpParams);
-    })).subscribe((response : Patients) => {
-      this.response = response;
-      this.patients = response._embedded.patients;
-      this.pages = Array(response.page.totalPages).fill(0).map((x,i) => i);
-    });
+    this.router.navigate(['/patients'], { queryParams: { sort: this.sortBy.value }, queryParamsHandling: 'merge'  });
   }
 
+  onRemoveFilter() {
+    this.searchFirstName = '';
+    this.searchLastName = '';
+    this.sortBy = this.sortOptions[1];
+  }
+
+  onSearch() {
+    this.router.navigate(['/patients'], { queryParams: 
+      { firstName: this.searchFirstName, 
+        lastName:  this.searchLastName,
+        sort: this.sortBy.value }
+      });
+  }
 }

@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.hateoas.core.Relation;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.joeltorrijos.catclinic.serializer.GenderSerializer;
 

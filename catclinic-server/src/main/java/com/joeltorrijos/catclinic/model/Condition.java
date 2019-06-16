@@ -18,7 +18,11 @@ public class Condition extends BaseEntity {
 	private Set<Appointment> appointments;
 	
 	public Condition() {
-		
+	
+	}
+	
+	public Condition(String name) {
+		this.name = name;
 	}
 	
 	public String getName() {

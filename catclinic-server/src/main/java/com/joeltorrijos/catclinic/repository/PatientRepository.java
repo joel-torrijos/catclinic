@@ -11,12 +11,10 @@ import org.springframework.data.querydsl.binding.SingleValueBinding;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 
-import com.joeltorrijos.catclinic.model.Gender;
 import com.joeltorrijos.catclinic.model.Patient;
 import com.joeltorrijos.catclinic.model.QPatient;
 import com.joeltorrijos.catclinic.projection.PatientProjection;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.dsl.EnumPath;
 import com.querydsl.core.types.dsl.StringPath;
 
 @RepositoryRestResource(excerptProjection = PatientProjection.class)
