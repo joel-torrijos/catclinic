@@ -40,4 +40,8 @@ export class ConditionListComponent implements OnInit {
       });
   }
 
+  getPageFromService(page) {
+    this.router.navigate(['/conditions'], { queryParams: { page: +page -1 }, queryParamsHandling: 'merge'  });
+  }
+
 }

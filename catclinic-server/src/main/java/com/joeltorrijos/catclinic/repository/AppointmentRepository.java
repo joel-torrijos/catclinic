@@ -3,6 +3,8 @@ package com.joeltorrijos.catclinic.repository;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
@@ -18,7 +20,6 @@ import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.StringPath;
 
 @RepositoryRestResource(excerptProjection = AppointmentProjection.class)
-//@RepositoryRestResource
 public interface AppointmentRepository extends JpaRepository<Appointment, Long>, QuerydslPredicateExecutor<Appointment>, 
 											QuerydslBinderCustomizer<QAppointment> {
 
@@ -47,4 +48,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long>,
 	 
 		});
 	}
+	
+	Page<Appointment> findByPatient_Id(Long id, Pageable pageable);
 }

@@ -55,7 +55,7 @@ export class AppointmentPayModal implements OnInit{
 
   ngOnInit() {
     this.paymentForm = this.fb.group({
-      amountPaid: [0, Validators.required]
+      amountPaid: [0, [Validators.required, Validators.min(0), Validators.pattern('^(0|[1-9][0-9]*)$')]]
     });
   }
 

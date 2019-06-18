@@ -22,7 +22,7 @@ export class AppointmentListComponent implements OnInit {
     {value: 'PAID', display: 'Paid'},
     {value: 'CANCELLED', display: 'Cancelled'}
   ];
-  sortOptions = [ {value: 'status', display: 'Status'} ];
+  sortOptions = [ {value: 'status,lastModifiedDate', display: 'Status'} ];
   searchDate: string;
   searchName: string = '';
   searchStatus = this.statusOptions[0];
@@ -77,4 +77,9 @@ export class AppointmentListComponent implements OnInit {
     modalRef.componentInstance.appointment = appointment;
     modalRef.result.then((result) => this.refreshToken$.next(undefined));
   }
+
+  getPageFromService(page) {
+    this.router.navigate(['/appointments'], { queryParams: { page: +page -1 }, queryParamsHandling: 'merge'  });
+  }
+  
 }

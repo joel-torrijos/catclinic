@@ -5,14 +5,14 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PatientModule } from './patient/patient.module';
 import { CoreModule } from './core';
-import { SharedModule } from './shared';
+import { SharedModule, FooterComponent } from './shared';
 import { HeaderComponent } from './shared';
 import { ConditionModule } from './condition/condition.module';
 import { AppointmentModule } from './appointment/appointment.module';
 
 @NgModule({
   declarations: [
-    AppComponent, HeaderComponent
+    AppComponent, HeaderComponent, FooterComponent
   ],
   imports: [
     BrowserModule,

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.joeltorrijos.catclinic.service.AppointmentService;
 
 @RepositoryRestController
-@RequestMapping("/appointments")
+@RequestMapping("/api/appointments")
 @CrossOrigin
 public class AppointmentController {
 	
@@ -44,6 +44,5 @@ public class AppointmentController {
 		BigDecimal amountPaid = new BigDecimal((String) fields.get("amountPaid"));
 		return ResponseEntity.ok(new Resource<>(appointmentService.pay(id, amountPaid)));
     }
-
-
+	
 }

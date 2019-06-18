@@ -45,4 +45,8 @@ export class PatientListComponent implements OnInit {
         sort: this.sortBy.value }
       });
   }
+
+  getPageFromService(page) {
+    this.router.navigate(['/patients'], { queryParams: { page: +page -1 }, queryParamsHandling: 'merge'  });
+  }
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.joeltorrijos.catclinic.model.Gender;
 
 @RepositoryRestController
-@RequestMapping("/genders")
+@RequestMapping("/api/genders")
 @CrossOrigin
 public class GenderController {
 	

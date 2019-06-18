@@ -11,7 +11,11 @@ import com.joeltorrijos.catclinic.model.Patient;
 public interface PatientProjection {
 	
 	Long getId();
-
+	
+	LocalDateTime getCreatedDate();
+	
+	LocalDateTime getLastModifiedDate();
+	
 	String getFirstName();
 	
 	String getLastName();

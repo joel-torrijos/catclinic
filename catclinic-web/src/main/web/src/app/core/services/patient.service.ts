@@ -18,7 +18,8 @@ export class PatientService {
     }
 
     get(id: string): Observable<Patient> {
-        return this.apiService.get('/patients/' + id);
+        let params = new HttpParams().set('projection','patientProjection');
+        return this.apiService.get('/patients/' + id, params);
     }
 
     save(patient) : Observable<Patient> {

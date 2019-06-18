@@ -45,12 +45,6 @@ export class AppointmentEditorComponent implements OnInit {
     })).subscribe(x => {
       this.appointment = x;
     });
-    // this.route.paramMap.pipe(switchMap((params) => {
-    //   if(params.get('id') && this.route.url[2] == 'diagnose') {
-    //     console.log("diagnose mode");
-    //   }
-    // })).subscribe();
-
   }
 
   searchA = (text$: Observable<string>) =>
@@ -83,12 +77,11 @@ export class AppointmentEditorComponent implements OnInit {
 
   get f() { return this.appointmentForm.controls; }
 
-  //  TODO: 
   goBack() {
-    let diagnoses = { _links: {}};
-    this.diagnoses.forEach((diagnosis, index) => {
-      diagnoses['_links'][index] = diagnosis._links.self.href;
-    });
+    this.location.back();
+    // console.log(this.appointment);
+    // console.log(this.appointment == true);
+  
   }
 
   onSubmit() {
@@ -110,14 +103,6 @@ export class AppointmentEditorComponent implements OnInit {
     ).subscribe((response) => {
       this.goBack();
     });
-    // this.appointmentService.saveDiagnoses({"href": "http://localhost:8080/appointments/2/diagnoses"},formatted).pipe(
-    //   catchError((err, caught) => {
-    //     console.log(err);
-    //     return empty();
-    //     })
-    // )
-    // .subscribe(data => {
-    //   console.log("done");});
   }
 
   public requestConditions = (name: string): Observable<Condition[]> => {

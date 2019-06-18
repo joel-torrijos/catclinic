@@ -53,7 +53,7 @@ public class DataInitializer {
 		
 		Condition stye = new Condition("Stye");
 		Condition soreEyes = new Condition("Sore eyes");
-		Condition swollenEars = new Condition("swollenEars");
+		Condition swollenEars = new Condition("Swollen Ears");
 
 		conditionRepo.saveAll(Arrays.asList(stye,soreEyes,swollenEars));
 		
@@ -80,6 +80,9 @@ public class DataInitializer {
 		a5.setPatient(kLeo);
 		a5.setStatus(Status.CANCELLED);
 		
-		appointmentRepo.saveAll(Arrays.asList(a1,a2,a3,a4,a5));	
+		Appointment a6 = new Appointment();
+		a6.setPatient(kimK);
+		
+		appointmentRepo.saveAll(Arrays.asList(a1,a2,a3,a4,a5,a6));	
 	}
 }

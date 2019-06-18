@@ -78,7 +78,7 @@
                     </td>
                     <td >₱&nbsp;{{appointment.amountPaid ? appointment.amountPaid : 0}}</td>
                     <td class="d-flex justify-content-end">
-                        <button class="btn btn-light btn-sm mr-1" routerLink="./{{appointment.id}}/diagnose"><span class="oi oi-eye"></span>&nbsp;View</button>
+                        <button class="btn btn-light btn-sm mr-1" routerLink="./{{appointment.id}}/view"><span class="oi oi-eye"></span>&nbsp;View</button>
                         <button class="btn btn-primary btn-sm mr-1" routerLink="./{{appointment.id}}/diagnose" *ngIf="appointment._links.diagnose"><span class="oi oi-clipboard"></span>&nbsp;Diagnose</button>
                         <button class="btn btn-primary btn-sm mr-1" *ngIf="appointment._links.pay" (click)="openPayModal(appointment)"><span class="oi oi-dollar"></span>&nbsp;Pay</button>
                         <button class="btn btn-danger btn-sm" *ngIf="appointment._links.cancel" (click)="openCancelModal(appointment)"><span class="oi oi-circle-x"></span>&nbsp;Cancel</button>
@@ -88,28 +88,19 @@
         </table>
         <div class="row" *ngIf="(response$ | async) as response">
             <div class="col-md-6 align-items-center">
-                <span>Showing {{ response._embedded.appointments[0].id }} to {{ response._embedded.appointments[response._embedded.appointments.length - 1].id }} of {{response.page.totalElements}} records</span>
+                <span>Showing {{(response.page.number * response.page.size) + 1}} 
+                    to {{(response.page.number * response.page.size) + response._embedded.appointments.length}} 
+                    of {{response.page.totalElements}} records
+                </span>
             </div>
-            <div class="col-md-6">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-end">
-                        <li class="page-item" [ngClass]="{'disabled': !response._links.prev}">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item" *ngFor="let page of [].constructor(response.page.totalPages); let i = index" [ngClass]="{'active': response.page.number === i}">
-                            <a class="page-link" [routerLink]="['/appointments']" [queryParams]="{ page: i }" queryParamsHandling="merge">{{i}}</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+            <div class="col-md-6 d-flex justify-content-end">
+                <ngb-pagination 
+                    (pageChange)="getPageFromService($event)"
+                    [collectionSize]="response.page.totalElements"
+                    [pageSize]="response.page.size"
+                    [page]="0" 
+                    [maxSize]="5" 
+                    [boundaryLinks]="true"></ngb-pagination>
             </div>
         </div>
     </div>

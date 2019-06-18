@@ -5,6 +5,7 @@ import { SharedModule } from "../shared";
 import { AppointmentEditorComponent } from './appointment-editor/appointment-editor.component';
 import { AppointmentCancelModal } from "./appointment-list/appointment-cancel-modal.component";
 import { AppointmentPayModal } from "./appointment-list/appointment-pay-modal.component";
+import { AppointmentDetailsComponent } from './appointment-details/appointment-details.component';
 
 @NgModule({
     imports: [
@@ -15,7 +16,8 @@ import { AppointmentPayModal } from "./appointment-list/appointment-pay-modal.co
         AppointmentListComponent, 
         AppointmentEditorComponent,
         AppointmentCancelModal,
-        AppointmentPayModal
+        AppointmentPayModal,
+        AppointmentDetailsComponent
     ],
     providers: [],
     entryComponents: [

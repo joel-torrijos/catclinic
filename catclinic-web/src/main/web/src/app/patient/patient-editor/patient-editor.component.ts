@@ -53,7 +53,7 @@ export class PatientEditorComponent implements OnInit {
       this.patientForm.patchValue({
         firstName: this.patient.firstName, 
         lastName: this.patient.lastName,
-        gender: this.patient.gender.name,
+        gender: this.patient.gender.toString().toUpperCase(),
         birthDate: this.patient.birthDate ? this.patient.birthDate.toString().split('T')[0] : '' });
     });
   }

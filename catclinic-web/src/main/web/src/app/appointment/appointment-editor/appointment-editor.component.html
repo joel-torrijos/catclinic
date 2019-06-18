@@ -35,7 +35,10 @@
                 <div class="col-md-6">
                     <div class="form-group form-inline">
                         <label for="" class="col-md-5 control-label justify-content-start text-muted">Patient Name</label>
-                        <a class="col-md-7 form-control-plaintext" [routerLink]="['/patients', appointment.patient.id, 'edit']">{{appointment.patient.firstName + ' ' + appointment.patient.lastName }}</a>
+                        <!-- <div class="col-md-">
+                            <button class="btn btn-link" [routerLink]="['/patients', appointment.patient.id, 'view']">{{appointment.patient.firstName + ' ' + appointment.patient.lastName }}</button>
+                        </div> -->
+                        <a class="col-md-7 form-control-plaintext btn-link" [routerLink]="['/patients', appointment.patient.id, 'view']">{{appointment.patient.firstName + ' ' + appointment.patient.lastName }}</a>
                     </div>
                     <div class="form-group form-inline">
                         <label for="" class="col-md-5 control-label justify-content-start text-muted">Date of Birth</label>
@@ -59,58 +62,64 @@
                 <div class="col-md-6">
                     <div class="form-group form-inline">
                         <label for="" class="col-md-5 control-label justify-content-start text-muted">Gender</label>
-                        <input type="text" class="form-control-plaintext col-md-7" readonly [value]="appointment.patient.gender">
+                        <input type="text" class="form-control-plaintext col-md-7" readonly [value]="appointment.patient.gender.value">
                     </div>
                     <div class="form-group form-inline">
                         <label for="" class="col-md-5 control-label justify-content-start text-muted">Address</label>
-                        <input type="text" class="form-control-plaintext col-md-7" readonly [value]="'Block 8 Pag-asa Extension City Heights General Santos City'">
+                        <input type="text" class="form-control-plaintext col-md-7" readonly [value]="'Chicago, Illinois'">
                     </div>
                     <div class="form-group form-inline">
-                        <label for="" class="col-md-5 control-label justify-content-start text-muted">Last Update</label>
+                        <label for="" class="col-md-5 control-label justify-content-start text-muted">Last Modified</label>
                         <input type="text" class="form-control-plaintext col-md-7" readonly [value]="appointment.lastModifiedDate | date : 'medium'">
                     </div>
-                </div>
-            </div>
-            <hr class="mb-4">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="">Notes</label>
-                        <textarea formControlName="notes" class="form-control" type="text" rows="7"></textarea>
+                    <div class="form-group form-inline">
+                        <label for="" class="col-md-5 control-label justify-content-start text-muted">Amount Paid</label>
+                        <input type="text" class="form-control-plaintext col-md-7" readonly [value]="'₱ ' + (appointment.amountPaid ? appointment.amountPaid : 0)">
                     </div>
                 </div>
             </div>
             <hr class="mb-4">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="">Diagnoses</label>
-                        <tag-input 
-                            [(ngModel)]="diagnoses"
-                            [ngModelOptions]="{standalone: true}"
-                            [placeholder]="'Enter a new Condition'"
-                            [onTextChangeDebounce]="500"
-                            [secondaryPlaceholder]="'Search Condition'"
-                            [onlyFromAutocomplete]="true">
-                            <tag-input-dropdown
-                                [autocompleteObservable]="requestConditions"
-                                [minimumTextLength]="1"
-                                [displayBy]="'name'"
-                                [identifyBy]="'id'">
-                                <!-- <ng-template let-item="item" let-index="index">
-                                    {{ item.name }}
-                                </ng-template> -->
-                            </tag-input-dropdown>
-                        </tag-input>
+            <div *ngIf="appointment?._links.diagnose">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="">Notes</label>
+                            <textarea formControlName="notes" class="form-control" type="text" rows="7"></textarea>
+                        </div>
                     </div>
                 </div>
+                <hr class="mb-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="">Diagnoses</label>
+                            <tag-input 
+                                [(ngModel)]="diagnoses"
+                                [ngModelOptions]="{standalone: true}"
+                                [placeholder]="'Enter a new Condition'"
+                                [onTextChangeDebounce]="500"
+                                [secondaryPlaceholder]="'Search Condition'"
+                                [onlyFromAutocomplete]="true">
+                                <tag-input-dropdown
+                                    [autocompleteObservable]="requestConditions"
+                                    [minimumTextLength]="1"
+                                    [displayBy]="'name'"
+                                    [identifyBy]="'id'">
+                                    <!-- <ng-template let-item="item" let-index="index">
+                                        {{ item.name }}
+                                    </ng-template> -->
+                                </tag-input-dropdown>
+                            </tag-input>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mb-4">
             </div>
-            <hr class="mb-4">
             <div class="row">
                 <div class="col-md-12 d-flex justify-content-end">
                     <button type="button" class="btn btn-primary mr-1" (click)="goBack()">Back</button>
                     <button type="button" class="btn btn-success mr-1" *ngIf="appointment?._links.diagnose" (click)="onSaveDiagnosis()">Save Diagnosis</button>
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="submit" class="btn btn-success" *ngIf="!appointment">Save</button>
                 </div>
             </div>
         </form>

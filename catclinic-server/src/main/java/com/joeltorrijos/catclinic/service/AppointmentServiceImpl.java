@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.joeltorrijos.catclinic.model.Appointment;
@@ -15,12 +17,17 @@ import com.joeltorrijos.catclinic.repository.ConditionRepository;
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
 	
-	@Autowired
 	private AppointmentRepository appointmentRepository;
 	
-	@Autowired
 	private ConditionRepository conditionRepository;
 	
+	@Autowired
+	public AppointmentServiceImpl(AppointmentRepository appointmentRepository,
+			ConditionRepository conditionRepository) {
+		this.appointmentRepository = appointmentRepository;
+		this.conditionRepository = conditionRepository;
+	}
+
 	@Override
 	public Appointment diagnose(Long id, String notes, List<Integer> conditionIds) {
 		Appointment appointment = appointmentRepository.findById(id).get();
@@ -54,5 +61,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return appointmentRepository.save(appointment);
 	}
 
+	@Override
+	public Page<Appointment> findByPatientId(Long id, Pageable pageable) {
+		return appointmentRepository.findByPatient_Id(id, pageable);
+	}
 
 }

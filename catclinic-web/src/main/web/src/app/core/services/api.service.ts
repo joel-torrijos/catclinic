@@ -15,18 +15,18 @@ export class ApiService {
     }
 
     get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
-        return this.http.get(`http:///localhost:8080${path}`, {params}).pipe(catchError(this.formatError));
+        return this.http.get(`http:///localhost:8080/api${path}`, {params}).pipe(catchError(this.formatError));
     }
 
     post(path: string | Link, body: Object = {}, httpOptions : { headers : HttpHeaders} ): Observable<any> {
         if(typeof path === 'string') 
-            return this.http.post(`http:///localhost:8080${path}`, JSON.stringify(body), httpOptions).pipe(catchError(this.formatError));
+            return this.http.post(`http:///localhost:8080/api${path}`, JSON.stringify(body), httpOptions).pipe(catchError(this.formatError));
 
         return this.http.post(path.href, JSON.stringify(body), httpOptions).pipe(catchError(this.formatError));
     }
 
     put(path: string, body: Object = {}, httpOptions : { headers : HttpHeaders}): Observable<any> {
-        return this.http.put(`http:///localhost:8080${path}`, JSON.stringify(body), httpOptions).pipe(catchError(this.formatError));
+        return this.http.put(`http:///localhost:8080/api${path}`, JSON.stringify(body), httpOptions).pipe(catchError(this.formatError));
     }
 
 }
