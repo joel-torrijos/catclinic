@@ -1,1 +1,1 @@
-web: java -jar $PATH_TO_JAR
+web: java -jar -Dserver.port=$PORT $PATH_TO_JAR
