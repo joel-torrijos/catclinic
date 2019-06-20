@@ -18,7 +18,7 @@ declare var $ : any;
 export class AppointmentListComponent implements OnInit {
   statusOptions = [ {value: '', display: 'All'},
     {value: 'PENDING', display: 'Pending'},
-    {value: 'FOR PAYMENT', display: 'For Payment'},
+    {value: 'FOR_PAYMENT', display: 'For Payment'},
     {value: 'PAID', display: 'Paid'},
     {value: 'CANCELLED', display: 'Cancelled'}
   ];
