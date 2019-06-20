@@ -73,6 +73,12 @@
         <artifactId>querydsl-apt</artifactId>
         <scope>provided</scope>
     </dependency>
+    
+    <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-jdbc</artifactId>
+    </dependency>
+    
      
   	<dependency>
   		<groupId>com.joeltorrijos.catclinic</groupId>
