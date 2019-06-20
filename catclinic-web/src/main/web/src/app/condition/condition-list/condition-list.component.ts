@@ -18,7 +18,7 @@ export class ConditionListComponent implements OnInit {
               private route : ActivatedRoute,
               private router : Router) { }
 
-  private readonly response$ = this.route.queryParams
+  response$ = this.route.queryParams
     .pipe(switchMap(
         (queryParams) => {
           let httpParams = new HttpParams({ fromObject: queryParams });

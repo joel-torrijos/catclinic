@@ -5,6 +5,7 @@ export interface Appointment {
     id: number,
     patient: Patient,
     notes: string,
+    createdDate : Date,
     _links: {
         self: Link,
         condition: Link,

@@ -33,9 +33,9 @@ export class AppointmentListComponent implements OnInit {
               private router : Router,
               private modalService : NgbModal) { }
 
-  private readonly refreshToken$ = new BehaviorSubject(undefined);
+  refreshToken$ = new BehaviorSubject(undefined);
 
-  private readonly response$ = 
+  response$ = 
     combineLatest(this.route.queryParams, this.refreshToken$)
       .pipe(
         switchMap(([queryParams]) => {

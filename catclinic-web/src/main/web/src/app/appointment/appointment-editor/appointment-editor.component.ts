@@ -21,6 +21,7 @@ export class AppointmentEditorComponent implements OnInit {
   appointmentForm : FormGroup;
   appointment : Appointment;
   diagnoses = [];
+  editMode = false;
 
   constructor(private appointmentService : AppointmentService,
               private patientService : PatientService,
@@ -40,6 +41,7 @@ export class AppointmentEditorComponent implements OnInit {
     this.route.url.pipe(switchMap(params => {
       if(params[1] && params[2].path == 'diagnose') {
         const id = params[1].path;
+        this.editMode = true;
         return this.appointmentService.get(id);
       }
     })).subscribe(x => {

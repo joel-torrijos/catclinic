@@ -21,13 +21,13 @@ export class PatientDetailsComponent implements OnInit {
               private router : Router,
               private location : Location) { }
 
-  private readonly patientResponse$ = this.route.params.pipe(switchMap((params) => 
+  patientResponse$ = this.route.params.pipe(switchMap((params) => 
   {
     return this.patientService.get(params['id']);}
     ));
 
-  private readonly refreshToken$ = new BehaviorSubject(undefined);
-  private readonly appointmentResponse$ = 
+  refreshToken$ = new BehaviorSubject(undefined);
+  appointmentResponse$ = 
     combineLatest(this.patientResponse$, this.refreshToken$)
       .pipe(switchMap(([patient]) => {
         console.log(patient);

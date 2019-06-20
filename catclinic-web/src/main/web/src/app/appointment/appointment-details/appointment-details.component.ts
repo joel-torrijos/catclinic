@@ -15,7 +15,7 @@ export class AppointmentDetailsComponent implements OnInit {
               private route : ActivatedRoute,
               private location: Location) { }
 
-  private readonly response$ = this.route.params.pipe(
+  response$ = this.route.params.pipe(
     switchMap((params) => 
       this.appointmentService.get(params['id'])
     ));
