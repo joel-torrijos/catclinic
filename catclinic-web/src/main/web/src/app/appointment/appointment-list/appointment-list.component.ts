@@ -79,7 +79,10 @@ export class AppointmentListComponent implements OnInit {
   }
 
   getPageFromService(page) {
-    this.router.navigate(['/appointments'], { queryParams: { page: +page -1 }, queryParamsHandling: 'merge'  });
+    const currentPage = this.route.snapshot.queryParamMap.get('page') ? this.route.snapshot.queryParamMap.get('page') : 0;
+    if(+page - 1 !== +currentPage) {
+      this.router.navigate(['/appointments'], { queryParams: { page: +page - 1 }, queryParamsHandling: 'merge'  });
+    }
   }
   
 }
