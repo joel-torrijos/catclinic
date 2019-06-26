@@ -29,7 +29,6 @@ export class PatientListComponent implements OnInit {
     }));
 
   ngOnInit() {
-    // this.getPageFromService('1');
     this.router.navigate(['/patients'], { queryParams: { sort: this.sortBy.value }, queryParamsHandling: 'merge'  });
   }
 
@@ -50,9 +49,7 @@ export class PatientListComponent implements OnInit {
   getPageFromService(page) {
     const currentPage = this.route.snapshot.queryParamMap.get('page') ? this.route.snapshot.queryParamMap.get('page') : 0;
     if(+page - 1 !== +currentPage) {
-      console.log('hey ' + (+page - 1) + ' ' + currentPage );
       this.router.navigate(['/patients'], { queryParams: { page: +page - 1 }, queryParamsHandling: 'merge'  });
     }
-    console.log('lewl ' + (+page - 1) + ' ' + currentPage );
   }
 }

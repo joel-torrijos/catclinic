@@ -6,6 +6,8 @@ export interface Appointment {
     patient: Patient,
     notes: string,
     createdDate : Date,
+    subjective: string,
+    objective: string,
     _links: {
         self: Link,
         condition: Link,

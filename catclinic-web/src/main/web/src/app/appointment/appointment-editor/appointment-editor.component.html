@@ -83,8 +83,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="">Notes</label>
-                            <textarea formControlName="notes" class="form-control" type="text" rows="7"></textarea>
+                            <label for="">Subjective</label>
+                            <textarea formControlName="subjective" class="form-control" type="text" rows="5"></textarea>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,16 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="">Diagnoses</label>
+                            <label for="">Objective</label>
+                            <textarea formControlName="objective" class="form-control" type="text" rows="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="">Assessment</label>
                             <tag-input 
                                 [(ngModel)]="diagnoses"
                                 [ngModelOptions]="{standalone: true}"

@@ -10,7 +10,7 @@ import com.joeltorrijos.catclinic.model.Appointment;
 
 public interface AppointmentService {
 
-	public Appointment diagnose(Long id, String notes, List<Integer> conditionIds);
+	public Appointment diagnose(Long id, String subjective, String objective, List<Integer> conditionIds);
 	
 	public Appointment cancel(Long id);
 	

@@ -28,4 +28,9 @@ public interface CustomLinkedAppointmentProjection {
 	boolean isCancellable();
 	
 	BigDecimal getAmountPaid();
+	
+	String getSubjective();
+	
+	String getObjective();
+	
 }

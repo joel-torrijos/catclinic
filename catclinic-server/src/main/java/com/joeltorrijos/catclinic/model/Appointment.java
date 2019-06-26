@@ -33,6 +33,10 @@ public class Appointment extends BaseEntity implements CustomLinkedAppointmentPr
 	
 	private BigDecimal amountPaid;
 	
+	private String subjective;
+	
+	private String objective;
+	
 	public Appointment() {
 		this.status = Status.PENDING;
 	}
@@ -71,6 +75,22 @@ public class Appointment extends BaseEntity implements CustomLinkedAppointmentPr
 
 	public void setAmountPaid(BigDecimal amountPaid) {
 		this.amountPaid = amountPaid;
+	}
+
+	public String getSubjective() {
+		return subjective;
+	}
+
+	public void setSubjective(String subjective) {
+		this.subjective = subjective;
+	}
+
+	public String getObjective() {
+		return objective;
+	}
+
+	public void setObjective(String objective) {
+		this.objective = objective;
 	}
 
 	public boolean isPending() {

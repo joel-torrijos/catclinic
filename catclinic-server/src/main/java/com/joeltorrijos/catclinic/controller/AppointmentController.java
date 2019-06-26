@@ -28,10 +28,11 @@ public class AppointmentController {
 	@SuppressWarnings("unchecked")
 	@PostMapping(value = "/{id}/diagnose")
     public ResponseEntity<?> diagnose(@PathVariable Long id, @RequestBody Map<Object, Object> fields) {
-		String notes = (String) fields.get("notes");
+		String subjective = (String) fields.get("subjective");
+		String objective = (String) fields.get("objective");
 		List<Integer> conditionIds = (ArrayList<Integer>) fields.get("conditions");
 		
-		return ResponseEntity.ok(new Resource<>(appointmentService.diagnose(id, notes, conditionIds)));
+		return ResponseEntity.ok(new Resource<>(appointmentService.diagnose(id, subjective, objective, conditionIds)));
     }
 	
 	@PostMapping(value = "/{id}/cancel")

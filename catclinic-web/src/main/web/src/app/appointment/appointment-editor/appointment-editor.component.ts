@@ -35,7 +35,8 @@ export class AppointmentEditorComponent implements OnInit {
 
     this.appointmentForm = this.fb.group({
       patient: ['', Validators.required],
-      notes: ['']
+      subjective: [''],
+      objective: [''],
     });
 
     this.route.url.pipe(switchMap(params => {
@@ -115,7 +116,11 @@ export class AppointmentEditorComponent implements OnInit {
   };
 
   onSaveDiagnosis() {
-    let diagnosis = { notes : this.f.notes.value, conditions: this.diagnoses.map(x=> x.id)};
+    console.log(this.appointmentForm.value);
+    let diagnosis = { 
+      subjective : this.f.subjective.value, 
+      objective : this.f.objective.value,
+      conditions: this.diagnoses.map(x=> x.id)};
     return this.appointmentService.diagnose(this.appointment._links.diagnose, diagnosis).subscribe(x => this.location.back());
   }
 

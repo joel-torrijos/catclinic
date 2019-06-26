@@ -29,10 +29,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
-	public Appointment diagnose(Long id, String notes, List<Integer> conditionIds) {
+	public Appointment diagnose(Long id, String subjective, String objective, List<Integer> conditionIds) {
 		Appointment appointment = appointmentRepository.findById(id).get();
 		
-		appointment.setNotes(notes);
+		appointment.setSubjective(subjective);
+		appointment.setObjective(objective);
 		
 		appointment.getDiagnoses().clear();
 		
