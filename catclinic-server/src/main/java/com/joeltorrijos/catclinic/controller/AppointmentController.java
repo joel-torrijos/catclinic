@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.joeltorrijos.catclinic.projection.CustomLinkedAppointmentProjection;
 import com.joeltorrijos.catclinic.service.AppointmentService;
 
 @RepositoryRestController
@@ -32,7 +33,7 @@ public class AppointmentController {
 		String objective = (String) fields.get("objective");
 		List<Integer> conditionIds = (ArrayList<Integer>) fields.get("conditions");
 		
-		return ResponseEntity.ok(new Resource<>(appointmentService.diagnose(id, subjective, objective, conditionIds)));
+		return ResponseEntity.ok(new Resource<>((CustomLinkedAppointmentProjection) appointmentService.diagnose(id, subjective, objective, conditionIds)));
     }
 	
 	@PostMapping(value = "/{id}/cancel")
