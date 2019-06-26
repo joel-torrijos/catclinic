@@ -1,5 +1,4 @@
 export const environment = {
   production: true,
-  api_url: 'http:///localhost:8080/api'
-  // api_url: 'https://radiant-basin-72035.herokuapp.com/api'
+  api_url: `${window.location.protocol}//${window.location.host}/api`
 };
