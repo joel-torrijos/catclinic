@@ -7,6 +7,7 @@ import { BehaviorSubject, combineLatest } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppointmentCancelModal } from './appointment-cancel-modal.component';
 import { AppointmentPayModal } from './appointment-pay-modal.component';
+import { AppointmentPrescriptionModal } from './appointment-prescription-modal.component';
 
 declare var $ : any;
 
@@ -83,6 +84,12 @@ export class AppointmentListComponent implements OnInit {
     if(+page - 1 !== +currentPage) {
       this.router.navigate(['/appointments'], { queryParams: { page: +page - 1 }, queryParamsHandling: 'merge'  });
     }
+  }
+
+  openPrescriptionModal(appointment : Appointment){
+    const modalRef = this.modalService.open(AppointmentPrescriptionModal, {size: 'lg'});
+    modalRef.componentInstance.appointment = appointment;
+    modalRef.result.then((result) => this.refreshToken$.next(undefined));
   }
   
 }

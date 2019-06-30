@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-md-8 offset-md-2" *ngIf="(response$ | async) as response">
+        <div class="row mb-3">
+            <div class="col-md-12 d-flex justify-content-between">
+                <h3>Medicines</h3>
+                <button class="btn btn-success btn-sm" routerLink="./new"><span class="oi oi-plus"></span>&nbsp;Add Medicine</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bg-light">
+                    <div class="form-group form-inline justify-content-between" >
+                        <div class="m-3">
+                            <input class="form-control" type="text" size="25" [(ngModel)]="searchName" placeholder="Search Name">
+                        </div>
+                        <div class="input-group m-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="sortBySelect">Sort By</label>
+                            </div>
+                            <select class="custom-select" id="sortBySelect" [(ngModel)]="sortBy">
+                                    <option [ngValue]="sortOption" *ngFor="let sortOption of sortOptions">{{ sortOption.display }}</option>
+                            </select>
+                        </div>
+                        <div class="btn-toolbar m-3" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <button class="btn btn-outline-secondary" (click)="onRemoveFilter()"><span class="oi oi-delete"></span>&nbsp;Remove Filters</button>
+                            </div>
+                            <div class="btn-group" role="group" aria-label="Second group">
+                                <button class="btn btn-secondary" (click)="onSearch()"><span class="oi oi-magnifying-glass"></span>&nbsp;Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let medicine of response?._embedded.medicines">
+                    <td>{{medicine.name}}</td>
+                    <td>{{medicine.description}}</td>
+                    <td class="d-flex justify-content-end">
+                        <button class="btn btn-primary btn-sm mr-1" routerLink="./{{medicine.id}}/edit"><span class="oi oi-pencil"></span>&nbsp;Edit</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-md-6 align-items-center">
+                <span>Showing {{(response.page.number * response.page.size) + 1}} 
+                    to {{(response.page.number * response.page.size) + response._embedded.medicines.length}} 
+                    of {{response.page.totalElements}} records
+                </span>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end">
+                <ngb-pagination 
+                    (pageChange)="getPageFromService($event)"
+                    [collectionSize]="response.page.totalElements"
+                    [pageSize]="response.page.size"
+                    [page]="0" 
+                    [maxSize]="5" 
+                    [boundaryLinks]="true"></ngb-pagination>
+            </div>
+        </div>
+    </div>
+</div>

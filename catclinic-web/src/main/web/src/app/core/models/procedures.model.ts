@@ -1,8 +1,8 @@
-import { Link, Condition } from ".";
+import { Link, Procedure } from ".";
 
-export interface Conditions {
+export interface Procedures {
     _embedded: {
-        conditions: Condition[]
+        procedures: Procedure[]
     },
     _links: {
         self: Link,

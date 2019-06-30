@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div *ngIf="editMode; else elseBlock"><h3>Edit Procedure</h3></div>
+        <ng-template #elseBlock><h3>Add Procedure</h3></ng-template>
+        <form [formGroup]="procedureForm" (ngSubmit)="onSubmit()">
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="">Name</label>
+                        <input class="form-control" type="text" name="" formControlName="name" [ngClass] ="{'is-invalid' : submitted && f.name.errors}">
+                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                            <div *ngIf="submitted && f.name.errors">Name is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">Description</label>
+                        <textarea class="form-control" type="text" rows="3" formControlName="description"></textarea>
+                    </div>
+                </div>
+            </div>
+            <hr class="mb-4">
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary mr-1" (click)="goBack()">Back</button>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

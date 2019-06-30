@@ -7,3 +7,7 @@ export * from './appointment.model';
 export * from './appointments.model';
 export * from './gender.model';
 export * from './genders.model';
+export * from './procedure.model';
+export * from './procedures.model';
+export * from './medicine.model';
+export * from './medicines.model';

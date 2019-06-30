@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ApiService, PatientService, ConditionService, AppointmentService, GenderService } from "./services";
+import { ApiService, PatientService, ConditionService, AppointmentService, GenderService, ProcedureService } from "./services";
+import { MedicineService } from "./services/medicine.service";
 
 @NgModule({
     imports: [
@@ -11,7 +12,9 @@ import { ApiService, PatientService, ConditionService, AppointmentService, Gende
         PatientService,
         ConditionService,
         AppointmentService,
-        GenderService
+        GenderService,
+        ProcedureService,
+        MedicineService
     ],
     declarations: []
 })

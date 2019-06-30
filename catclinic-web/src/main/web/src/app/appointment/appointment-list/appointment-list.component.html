@@ -78,7 +78,17 @@
                     </td>
                     <td >₱&nbsp;{{appointment.amountPaid ? appointment.amountPaid : 0}}</td>
                     <td class="d-flex justify-content-end">
-                        <button class="btn btn-light btn-sm mr-1" routerLink="./{{appointment.id}}/view"><span class="oi oi-eye"></span>&nbsp;View</button>
+                        <!-- <button class="btn btn-light btn-sm mr-1" routerLink="./{{appointment.id}}/view"><span class="oi oi-eye"></span>&nbsp;View</button> -->
+                        <div class="btn-group mr-1">
+                           <button class="btn btn-light btn-sm" routerLink="./{{appointment.id}}/view"><span class="oi oi-eye"></span>&nbsp;View</button>
+                            <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                              <button class="btn btn-light btn-sm dropdown-toggle-split" ngbDropdownToggle></button>
+                              <div class="dropdown-menu" ngbDropdownMenu>
+                                <button ngbDropdownItem (click)="openPrescriptionModal(appointment)"><span class="oi oi-file"></span>&nbsp;View Prescription</button>
+                                <button ngbDropdownItem><span class="oi oi-print"></span>&nbsp;Print Prescription</button>
+                              </div>
+                            </div>
+                        </div>
                         <button class="btn btn-primary btn-sm mr-1" routerLink="./{{appointment.id}}/diagnose" *ngIf="appointment._links.diagnose"><span class="oi oi-clipboard"></span>&nbsp;Diagnose</button>
                         <button class="btn btn-primary btn-sm mr-1" *ngIf="appointment._links.pay" (click)="openPayModal(appointment)"><span class="oi oi-dollar"></span>&nbsp;Pay</button>
                         <button class="btn btn-danger btn-sm" *ngIf="appointment._links.cancel" (click)="openCancelModal(appointment)"><span class="oi oi-circle-x"></span>&nbsp;Cancel</button>

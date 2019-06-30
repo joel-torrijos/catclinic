@@ -14,7 +14,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExc
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joeltorrijos.catclinic.model.Appointment;
 import com.joeltorrijos.catclinic.model.Condition;
+import com.joeltorrijos.catclinic.model.Medicine;
 import com.joeltorrijos.catclinic.model.Patient;
+import com.joeltorrijos.catclinic.model.Procedure;
 
 @Configuration
 public class ExposeEntityIdRestMvcConfiguration implements RepositoryRestConfigurer {
@@ -24,6 +26,8 @@ public class ExposeEntityIdRestMvcConfiguration implements RepositoryRestConfigu
 		config.exposeIdsFor(Patient.class);
 		config.exposeIdsFor(Condition.class);
 		config.exposeIdsFor(Appointment.class);
+		config.exposeIdsFor(Procedure.class);
+		config.exposeIdsFor(Medicine.class);
 		
 	}
 

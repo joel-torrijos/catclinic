@@ -6,6 +6,7 @@ import { AppointmentEditorComponent } from './appointment-editor/appointment-edi
 import { AppointmentCancelModal } from "./appointment-list/appointment-cancel-modal.component";
 import { AppointmentPayModal } from "./appointment-list/appointment-pay-modal.component";
 import { AppointmentDetailsComponent } from './appointment-details/appointment-details.component';
+import { AppointmentPrescriptionModal } from "./appointment-list/appointment-prescription-modal.component";
 
 @NgModule({
     imports: [
@@ -17,12 +18,14 @@ import { AppointmentDetailsComponent } from './appointment-details/appointment-d
         AppointmentEditorComponent,
         AppointmentCancelModal,
         AppointmentPayModal,
+        AppointmentPrescriptionModal,
         AppointmentDetailsComponent
     ],
     providers: [],
     entryComponents: [
         AppointmentCancelModal,
-        AppointmentPayModal
+        AppointmentPayModal,
+        AppointmentPrescriptionModal
     ]
 })
 export class AppointmentModule { }
