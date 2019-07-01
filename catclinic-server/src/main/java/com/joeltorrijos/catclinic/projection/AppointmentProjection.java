@@ -1,5 +1,7 @@
 package com.joeltorrijos.catclinic.projection;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 
@@ -11,6 +13,8 @@ public interface AppointmentProjection extends CustomLinkedAppointmentProjection
 
 	@Value("#{target.status.value}")
 	String getStatus();
+	
+	Set<PrescriptionProjection> getPrescription();
 	
 	@JsonIgnore
 	boolean isPending();

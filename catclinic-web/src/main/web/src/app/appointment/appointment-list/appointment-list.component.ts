@@ -87,7 +87,8 @@ export class AppointmentListComponent implements OnInit {
   }
 
   openPrescriptionModal(appointment : Appointment){
-    const modalRef = this.modalService.open(AppointmentPrescriptionModal, {size: 'lg'});
+    // const modalRef = this.modalService.open(AppointmentPrescriptionModal, {size: 'lg'});
+    const modalRef = this.modalService.open(AppointmentPrescriptionModal, { windowClass: 'prescription-modal'});
     modalRef.componentInstance.appointment = appointment;
     modalRef.result.then((result) => this.refreshToken$.next(undefined));
   }

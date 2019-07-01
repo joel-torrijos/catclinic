@@ -7,10 +7,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.joeltorrijos.catclinic.model.Appointment;
+import com.joeltorrijos.catclinic.web.DiagnosisForm;
 
 public interface AppointmentService {
 
 	public Appointment diagnose(Long id, String subjective, String objective, List<Integer> conditionIds);
+	
+	public Appointment diagnose(Long id, DiagnosisForm form);
 	
 	public Appointment cancel(Long id);
 	

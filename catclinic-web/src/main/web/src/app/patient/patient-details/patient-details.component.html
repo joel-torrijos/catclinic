@@ -41,7 +41,7 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" style="width: 15%" data-toggle="tooltip" data-placement="bottom" title="dd/mm/yyyy">Appointment Date</th>
-                                    <th scope="col" style="width: 30%">Conditions</th>
+                                    <th scope="col" style="width: 30%">Assessment</th>
                                     <th scope="col" style="width: 10%">Status</th>
                                     <th scope="col" style="width: 10%">Amount Paid</th>
                                     <th scope="col" style="width: 10%"></th>
@@ -51,7 +51,7 @@
                                 <tr *ngFor="let appointment of appointmentResponse?._embedded.appointments">
                                     <td>{{appointment.createdDate | date: 'medium' }}</td>
                                     <td>
-                                        <h5><span class="badge badge-pill badge-secondary" *ngFor="let d of appointment.diagnoses">{{d.name}}</span></h5>
+                                        <h5><span class="badge badge-pill badge-secondary" *ngFor="let d of appointment.assessment">{{d.name}}</span></h5>
                                     </td>
                                     <td>
                                         <h5>

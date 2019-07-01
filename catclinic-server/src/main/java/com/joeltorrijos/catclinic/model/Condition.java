@@ -14,7 +14,7 @@ public class Condition extends BaseEntity {
 	private String name;
 	private String description;
 	
-	@ManyToMany(mappedBy="diagnoses")
+	@ManyToMany(mappedBy="assessment")
 	private Set<Appointment> appointments;
 	
 	public Condition() { }

@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.joeltorrijos.catclinic.model.Condition;
 import com.joeltorrijos.catclinic.model.Patient;
+import com.joeltorrijos.catclinic.model.Procedure;
 
 public interface CustomLinkedAppointmentProjection {
 	
@@ -19,7 +20,9 @@ public interface CustomLinkedAppointmentProjection {
 	
 	Patient getPatient();
 	
-	Set<Condition> getDiagnoses();
+	Set<Condition> getAssessment();
+	
+	Set<Procedure> getProcedures();
 	
 	boolean isPending();
 

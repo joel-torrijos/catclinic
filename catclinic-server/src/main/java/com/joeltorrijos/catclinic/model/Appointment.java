@@ -1,14 +1,17 @@
 package com.joeltorrijos.catclinic.model;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.joeltorrijos.catclinic.projection.CustomLinkedAppointmentProjection;
@@ -24,10 +27,16 @@ public class Appointment extends BaseEntity implements CustomLinkedAppointmentPr
 	private String notes;
 
 	@ManyToMany
-	@JoinTable(name = "diagnosis",
+	@JoinTable(name = "assessment",
 			   joinColumns = @JoinColumn(name="appointment_id"),
 			   inverseJoinColumns = @JoinColumn(name="condition_id"))
-	private Set<Condition> diagnoses;
+	private Set<Condition> assessment;
+	
+	@ManyToMany
+	@JoinTable(name = "procedures",
+			   joinColumns = @JoinColumn(name="appointment_id"),
+			   inverseJoinColumns = @JoinColumn(name="procedure_id"))
+	private Set<Procedure> procedures;
 	
 	private Status status;
 	
@@ -36,6 +45,9 @@ public class Appointment extends BaseEntity implements CustomLinkedAppointmentPr
 	private String subjective;
 	
 	private String objective;
+	
+	@OneToMany(mappedBy = "appointment", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Prescription> prescription;
 	
 	public Appointment() {
 		this.status = Status.PENDING;
@@ -57,14 +69,14 @@ public class Appointment extends BaseEntity implements CustomLinkedAppointmentPr
 		this.notes = notes;
 	}
 
-	public Set<Condition> getDiagnoses() {
-		return diagnoses;
+	public Set<Condition> getAssessment() {
+		return assessment;
 	}
 
-	public void setDiagnoses(Set<Condition> diagnoses) {
-		this.diagnoses = diagnoses;
+	public void setAssessment(Set<Condition> assessment) {
+		this.assessment = assessment;
 	}
-	
+
 	public Status getStatus() {
 		return status;
 	}
@@ -125,6 +137,22 @@ public class Appointment extends BaseEntity implements CustomLinkedAppointmentPr
 			return this.value;
 		}
 		
+	}
+
+	public Set<Procedure> getProcedures() {
+		return procedures;
+	}
+
+	public void setProcedures(Set<Procedure> procedures) {
+		this.procedures = procedures;
+	}
+
+	public Set<Prescription> getPrescription() {
+		return prescription;
+	}
+
+	public void setPrescription(Set<Prescription> prescription) {
+		this.prescription = prescription;
 	}
 	
 }

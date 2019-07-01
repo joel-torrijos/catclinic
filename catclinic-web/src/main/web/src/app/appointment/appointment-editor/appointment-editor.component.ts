@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { PatientService, Patient, AppointmentService, Appointment, ConditionService, Conditions, Condition } from 'src/app/core';
+import { PatientService, Patient, AppointmentService, Appointment, ConditionService, Condition, ProcedureService, Procedure, MedicineService, Medicine } from 'src/app/core';
 import { Observable, of, empty } from 'rxjs';
-import { map, debounceTime, distinctUntilChanged, tap, switchMap, catchError, mergeMap } from 'rxjs/operators';
+import { map, debounceTime, distinctUntilChanged, tap, switchMap, catchError, mergeMap, take } from 'rxjs/operators';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { stringify } from 'querystring';
 
 
 @Component({
@@ -21,14 +22,21 @@ export class AppointmentEditorComponent implements OnInit {
   appointmentForm : FormGroup;
   appointment : Appointment;
   diagnoses = [];
+  procedures = [];
   editMode = false;
+  medicines;
 
   constructor(private appointmentService : AppointmentService,
               private patientService : PatientService,
               private conditionService : ConditionService,
+              private procedureService : ProcedureService,
+              private medicineService : MedicineService,
               private fb : FormBuilder,
               private route : ActivatedRoute,
               private location: Location) { }
+
+            
+  medicines$ = this.medicineService.getAll(new HttpParams().set('sort','name'));
 
   ngOnInit() {
     this.patient = '';
@@ -37,6 +45,7 @@ export class AppointmentEditorComponent implements OnInit {
       patient: ['', Validators.required],
       subjective: [''],
       objective: [''],
+      prescription: this.fb.array([])
     });
 
     this.route.url.pipe(switchMap(params => {
@@ -48,6 +57,10 @@ export class AppointmentEditorComponent implements OnInit {
     })).subscribe(x => {
       this.appointment = x;
     });
+
+    this.medicines$.subscribe(x=> {
+      this.medicines = x._embedded.medicines;
+    })
   }
 
   searchA = (text$: Observable<string>) =>
@@ -80,12 +93,7 @@ export class AppointmentEditorComponent implements OnInit {
 
   get f() { return this.appointmentForm.controls; }
 
-  goBack() {
-    this.location.back();
-    // console.log(this.appointment);
-    // console.log(this.appointment == true);
-  
-  }
+  goBack() { this.location.back(); }
 
   onSubmit() {
     if(this.appointmentForm.invalid) {
@@ -116,13 +124,53 @@ export class AppointmentEditorComponent implements OnInit {
   };
 
   onSaveDiagnosis() {
-    console.log(this.appointmentForm.value);
+    // console.log(this.appointmentForm.value);
     let diagnosis = { 
       subjective : this.f.subjective.value, 
       objective : this.f.objective.value,
-      conditions: this.diagnoses.map(x=> x.id)};
+      conditions: this.diagnoses.map(x => x.id),
+      procedures: this.procedures.map(x => x.id),
+      prescription: this.f.prescription.value};
+    console.log(JSON.stringify(diagnosis));
     return this.appointmentService.diagnose(this.appointment._links.diagnose, diagnosis).subscribe(x => this.location.back());
   }
 
+  public requestProcedures = (name: string): Observable<Procedure[]> => {
+    let params = new HttpParams().set('name', name);
+    return this.procedureService.getAll(params).pipe(map(data => {
+      return data._embedded.procedures;
+    }));
+  };
 
+  // Dynamic addition/removal of medicine
+  get prescriptionFormArray() {
+    return (<FormArray>this.appointmentForm.get('prescription'));
+  }
+
+  createPrescriptionGroup() {
+    return this.fb.group({
+      medicine: this.medicines[0].id,
+      instructions: ''
+    });
+  }
+
+  addPrescriptionToPrescriptionFormArray() {
+    this.prescriptionFormArray.push(this.createPrescriptionGroup());
+  }
+
+  removePrescriptionFromPrescriptionFormArray(index) {
+    this.prescriptionFormArray.removeAt(index);
+  }
+
+  getPrescriptionGroupAtIndex(index) {
+    return (<FormGroup>this.prescriptionFormArray.at(index));
+  }
+
+  getFormControl() {
+    return this.fb.control(null);
+  }
+
+  selectedAPIChanged(i) {
+    this.getPrescriptionGroupAtIndex(i).addControl('value', this.getFormControl());
+  }
 }

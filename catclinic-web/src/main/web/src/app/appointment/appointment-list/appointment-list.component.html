@@ -63,7 +63,7 @@
                     <td>{{appointment.createdDate | date: 'dd/MM/yyyy h:mm a' }}</td>
                     <td>{{appointment.patient.firstName}} {{appointment.patient.lastName}}</td>
                     <td>
-                        <h5><span class="badge badge-pill badge-secondary" *ngFor="let d of appointment.diagnoses">{{d.name}}</span></h5>
+                        <h5><span class="badge badge-pill badge-secondary" *ngFor="let d of appointment.assessment">{{d.name}}</span></h5>
                     </td>
                     <td>
                         <h5>

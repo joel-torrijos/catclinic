@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-6 offset-md-3">
+    <div class="col-md-8 offset-md-2">
         <div *ngIf="editMode; else elseBlock"><h3>Edit Appointment</h3></div>
         <ng-template #elseBlock><h3>Add Appointment</h3></ng-template>
         <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
@@ -83,7 +83,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="">Subjective</label>
+                            <h5><label for="">Subjective</label></h5>
                             <textarea formControlName="subjective" class="form-control" type="text" rows="5"></textarea>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="">Objective</label>
+                            <h5><label for="">Objective</label></h5>
                             <textarea formControlName="objective" class="form-control" type="text" rows="5"></textarea>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="">Assessment</label>
+                            <h5><label for="">Assessment</label></h5>
                             <tag-input 
                                 [(ngModel)]="diagnoses"
                                 [ngModelOptions]="{standalone: true}"
@@ -114,11 +114,68 @@
                                     [minimumTextLength]="1"
                                     [displayBy]="'name'"
                                     [identifyBy]="'id'">
-                                    <!-- <ng-template let-item="item" let-index="index">
-                                        {{ item.name }}
-                                    </ng-template> -->
                                 </tag-input-dropdown>
                             </tag-input>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5>Plan</h5>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Procedure</label>
+                                <div class="form-group">
+                                    <tag-input 
+                                        [(ngModel)]="procedures"
+                                        [ngModelOptions]="{standalone: true}"
+                                        [placeholder]="'Enter a new Procedure'"
+                                        [onTextChangeDebounce]="500"
+                                        [secondaryPlaceholder]="'Search Procedure'"
+                                        [onlyFromAutocomplete]="true">
+                                        <tag-input-dropdown
+                                            [autocompleteObservable]="requestProcedures"
+                                            [minimumTextLength]="1"
+                                            [displayBy]="'name'"
+                                            [identifyBy]="'id'">
+                                        </tag-input-dropdown>
+                                    </tag-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>&#8478; Prescription</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div formArrayName="prescription">
+                                            <div *ngFor="let prescription of prescriptionFormArray.controls; let i = index;">
+                                                <div class="prescription-item" [formGroupName]="i">
+                                                        <div class="col-md-4">
+                                                            <select formControlName="medicine" class="custom-select">
+                                                                <option [ngValue]="+medicine.id" *ngFor="let medicine of medicines">{{ medicine.name }}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <input type="text" class="form-control" formControlName="instructions" placeholder="Instructions ex. 1 tab TID (3 x a day) after meals for 1 wk">
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                                <button class="btn btn-danger" (click)="removePrescriptionFromPrescriptionFormArray(i)"><span class="oi oi-trash"></span></button>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-info" (click)="addPrescriptionToPrescriptionFormArray()"><span class="oi oi-plus"></span>&nbsp;Add to Prescription</button>
+                            </div>
                         </div>
                     </div>
                 </div>

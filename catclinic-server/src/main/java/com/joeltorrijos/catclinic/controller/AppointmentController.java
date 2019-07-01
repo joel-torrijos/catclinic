@@ -1,8 +1,6 @@
 package com.joeltorrijos.catclinic.controller;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.joeltorrijos.catclinic.projection.CustomLinkedAppointmentProjection;
 import com.joeltorrijos.catclinic.service.AppointmentService;
+import com.joeltorrijos.catclinic.web.DiagnosisForm;
 
 @RepositoryRestController
 @RequestMapping("/api/appointments")
@@ -26,14 +25,27 @@ public class AppointmentController {
 	@Autowired
 	private AppointmentService appointmentService;
 	
-	@SuppressWarnings("unchecked")
+//	@SuppressWarnings("unchecked")
+//	@PostMapping(value = "/{id}/diagnose")
+//    public ResponseEntity<?> diagnose(@PathVariable Long id, @RequestBody Map<Object, Object> fields) {
+//		String subjective = (String) fields.get("subjective");
+//		String objective = (String) fields.get("objective");
+//		List<Integer> conditionIds = (ArrayList<Integer>) fields.get("conditions");
+//		List<Integer> procedureIds = (ArrayList<Integer>) fields.get("procedures");
+//		List<Integer> prescriptions = (ArrayList<Integer>) fields.get("prescriptions");
+//		
+//		Resource<?> resource = new Resource<>(
+//				(CustomLinkedAppointmentProjection) appointmentService.diagnose(id, subjective, objective, conditionIds, procedureIds, prescriptions));
+//		
+//		return ResponseEntity.ok(resource);
+//    }
+	
 	@PostMapping(value = "/{id}/diagnose")
-    public ResponseEntity<?> diagnose(@PathVariable Long id, @RequestBody Map<Object, Object> fields) {
-		String subjective = (String) fields.get("subjective");
-		String objective = (String) fields.get("objective");
-		List<Integer> conditionIds = (ArrayList<Integer>) fields.get("conditions");
+    public ResponseEntity<?> diagnose(@PathVariable Long id, @RequestBody DiagnosisForm form) {
+		Resource<?> resource = new Resource<>(
+				(CustomLinkedAppointmentProjection) appointmentService.diagnose(id, form));
 		
-		return ResponseEntity.ok(new Resource<>((CustomLinkedAppointmentProjection) appointmentService.diagnose(id, subjective, objective, conditionIds)));
+		return ResponseEntity.ok(resource);
     }
 	
 	@PostMapping(value = "/{id}/cancel")

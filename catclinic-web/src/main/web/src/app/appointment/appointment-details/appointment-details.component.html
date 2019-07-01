@@ -53,7 +53,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="">Subjective</label>
+                        <h5><label for="">Subjective</label></h5>
                         <textarea class="form-control" readonly type="text" rows="5">{{response.subjective}}</textarea>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="">Objective</label>
+                        <h5><label for="">Objective</label></h5>
                         <textarea class="form-control" readonly type="text" rows="5">{{response.objective}}</textarea>
                     </div>
                 </div>
@@ -71,9 +71,36 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="">Assessment</label>
+                        <h5><label for="">Assessment</label></h5>
                         <div>
-                            <h5><span class="badge badge-pill badge-secondary" *ngFor="let d of response.diagnoses">{{d.name}}</span></h5>
+                            <h5><span class="badge badge-pill badge-secondary" *ngFor="let d of response.assessment">{{d.name}}</span></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="mb-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <h5><label for="">Plan</label></h5>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="">Procedure</label>
+                            <h5><span class="badge badge-pill badge-secondary" *ngFor="let p of response.procedures">{{p.name}}</span></h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>&#8478; Prescription</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group row" *ngFor="let prescription of response.prescription">
+                                        <input type="text"class="form-control-plaintext col-md-3 border-bottom" value="{{prescription.medicine}}">
+                                        <input type="text"class="form-control-plaintext col-md-9 border-bottom" value="{{prescription.instructions}}">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
