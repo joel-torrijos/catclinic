@@ -6,6 +6,6 @@ export interface Medicine {
     description: string,
     _links: {
         self: Link,
-        condition: Link
+        medicine: Link
     }
 }

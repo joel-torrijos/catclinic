@@ -3,7 +3,9 @@ package com.joeltorrijos.catclinic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.assertj.core.util.Arrays;
@@ -21,6 +23,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joeltorrijos.catclinic.model.Appointment.Status;
+import com.joeltorrijos.catclinic.web.DiagnosisForm;
+import com.joeltorrijos.catclinic.web.PrescriptionForm;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -55,12 +59,18 @@ public class WebIntegrationTests {
 	public void appointmentDiagnose() throws Exception {
 		final String SUBJECTIVE = "headache, throbbing radiating to the side of the head; tearing, blurring of vision";
 		final String OBJECTIVE = "VOU: 20/50 (which means blurred vision); No conjunctival congestion, no discharge";
-		int[] conditions = {1,2,3};
+		List<Integer> conditions = new ArrayList<>();
+		conditions.add(1);
+		conditions.add(2);
+		conditions.add(3);
+		List<Integer> procedures = new ArrayList<>();
+		procedures.add(1);
+		procedures.add(2);
+		List<PrescriptionForm> prescriptionForms = new ArrayList<>();
+		prescriptionForms.add(new PrescriptionForm("test1",1));
+		prescriptionForms.add(new PrescriptionForm("test2",2));
 		
-		Map<String, Object> diagnosis = new HashMap<>();
-		diagnosis.put("subjective", SUBJECTIVE);
-		diagnosis.put("objective", OBJECTIVE);		
-		diagnosis.put("conditions", Arrays.asList(conditions));
+		DiagnosisForm diagnosis = new DiagnosisForm(SUBJECTIVE, OBJECTIVE, conditions, procedures, prescriptionForms);
 		
 		String json = mapper.writeValueAsString(diagnosis);
 		mvc.perform(post("/api/appointments/1/diagnose")

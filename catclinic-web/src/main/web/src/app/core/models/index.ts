@@ -11,3 +11,4 @@ export * from './procedure.model';
 export * from './procedures.model';
 export * from './medicine.model';
 export * from './medicines.model';
+export * from './prescription.model';

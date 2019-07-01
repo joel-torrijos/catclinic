@@ -6,6 +6,6 @@ export interface Procedure {
     description: string,
     _links: {
         self: Link,
-        condition: Link
+        procedure: Link
     }
 }

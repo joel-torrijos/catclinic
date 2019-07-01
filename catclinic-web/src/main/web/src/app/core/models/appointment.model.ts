@@ -1,4 +1,4 @@
-import { Link } from ".";
+import { Link, Prescription } from ".";
 import { Patient } from "./patient.model";
 
 export interface Appointment {
@@ -8,6 +8,7 @@ export interface Appointment {
     createdDate : Date,
     subjective: string,
     objective: string,
+    prescription: Prescription[],
     _links: {
         self: Link,
         condition: Link,
