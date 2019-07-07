@@ -7,7 +7,7 @@ import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { stringify } from 'querystring';
+import { RxwebValidators } from "@rxweb/reactive-form-validators"
 
 
 @Component({
@@ -56,6 +56,7 @@ export class AppointmentEditorComponent implements OnInit {
       }
     })).subscribe(x => {
       this.appointment = x;
+      this.f.patient.patchValue(x.patient);
     });
 
     this.medicines$.subscribe(x=> {
@@ -106,13 +107,9 @@ export class AppointmentEditorComponent implements OnInit {
         });
 
     this.f['patient'].setValue(this.patient._links.self.href);
-    this.appointmentService.save(this.appointmentForm.value).pipe(
-      mergeMap(link => this.appointmentService.saveDiagnoses(link,formatted)),
-      catchError((err, caught) => {
-        return empty();
-      })
-    ).subscribe((response) => {
-      this.goBack();
+    this.appointmentService.save(this.appointmentForm.value)
+      .subscribe((response) => {
+        this.goBack();
     });
   }
 
@@ -124,14 +121,17 @@ export class AppointmentEditorComponent implements OnInit {
   };
 
   onSaveDiagnosis() {
-    // console.log(this.appointmentForm.value);
+    if(this.appointmentForm.invalid) {
+      return;
+    }
+
     let diagnosis = { 
       subjective : this.f.subjective.value, 
       objective : this.f.objective.value,
       conditions: this.diagnoses.map(x => x.id),
       procedures: this.procedures.map(x => x.id),
       prescription: this.f.prescription.value};
-    console.log(JSON.stringify(diagnosis));
+      
     return this.appointmentService.diagnose(this.appointment._links.diagnose, diagnosis).subscribe(x => this.location.back());
   }
 
@@ -149,8 +149,8 @@ export class AppointmentEditorComponent implements OnInit {
 
   createPrescriptionGroup() {
     return this.fb.group({
-      medicine: this.medicines[0].id,
-      instructions: ''
+      medicine: [this.medicines[0].id, RxwebValidators.unique()],
+      instructions: ['']
     });
   }
 

@@ -27,16 +27,20 @@ import { Validators, FormGroup, FormBuilder } from "@angular/forms";
               </div>
           </div> 
           <div class="form-group row">
-              <label for="" class="col-4 col-form-label text-muted">Amount to Pay</label>
-              <div class="col-8">
-                  <div class="input-group">
-                      <div class="input-group-prepend">
-                          <span class="input-group-text">₱</span>
-                      </div>
-                      <input type="number" class="form-control" formControlName="amountPaid" aria-label="Amount (to the nearest dollar)">
-                  </div>
-              </div>
-          </div> 
+            <label for="" class="col-4 col-form-label text-muted">Amount to Pay</label>
+            <div class="col-8">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">₱</span>
+                    </div>
+                    <input type="number" class="form-control" [ngClass]="{'is-invalid' : f.amountPaid.invalid}" formControlName="amountPaid" aria-label="Amount (to the nearest dollar)">
+                </div>
+                <div *ngIf="f.amountPaid.invalid" class="invalid-feedback d-block">
+                  <div *ngIf="f.amountPaid.errors?.required">Amount to pay is required.</div>
+                  <div *ngIf="f.amountPaid.errors?.min">Invalid number. Input a nonnegative number.</div>
+                </div>
+            </div>
+        </div>
       </form>
     </div>
     <div class="modal-footer">
@@ -60,6 +64,11 @@ export class AppointmentPayModal implements OnInit{
   }
 
   onPay() {
+    if(this.paymentForm.invalid) {
+      console.log(this.f.amountPaid.errors);
+      return;
+    }
+
     this.paymentForm.patchValue({
       amountPaid: this.paymentForm.controls.amountPaid.value.toFixed(2)
     });
@@ -68,4 +77,6 @@ export class AppointmentPayModal implements OnInit{
       .pay(this.appointment._links.pay, this.paymentForm.value)
       .subscribe(() => this.activeModal.close());
   }
+
+  get f() { return this.paymentForm.controls; }
 }
